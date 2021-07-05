@@ -1,10 +1,9 @@
 // import React from 'react';
-
-
+import {Homepage} from './pages/Homepage/homepage'
 function App() {
   return (
-    <div className="">
-   <h1 className="font-bold">setup of app done</h1>
+    <div className="bg-grey h-screen">
+      <Homepage />
     </div>
   );
 }
