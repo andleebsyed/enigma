@@ -1,7 +1,19 @@
+import { QuizCard } from "../../Components/QuizCard/QuizCard";
+
 export function Categories() {
     return (
-        <div>
-            <h1>i am categories page</h1>
-        </div>
+        <main className="flex justify-evenly flex-wrap bg-grey mt-4">
+            <QuizCard />
+            <QuizCard />
+            <QuizCard />
+            <QuizCard />
+       </main>
+
+
+        
+
+      
+
+      
     )
 }
