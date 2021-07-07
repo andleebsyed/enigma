@@ -1,4 +1,4 @@
-export function QuestionPageQuizInfo() {
+export function QuizPerformance() {
     return (
         <section className="flex justify-between">
         <span className="text-white font-bold m-2">Question 0/0</span>
