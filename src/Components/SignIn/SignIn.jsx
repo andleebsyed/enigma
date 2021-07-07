@@ -7,7 +7,7 @@ export function SignIn() {
         navigate('/categories', {replace: true})
     }
     return (
-        <section className="w-96 p-8 mt-10 bg-grey-light m-3">
+        <main className="w-96 p-8 mt-10 bg-grey-light m-3">
                     <p className="text-center text-white font-bold text-xl">Already have an Account?</p>
                     <form className="flex flex-col" onSubmit={SignInSubmitHandler}>
                         <label className="text-white mt-8">Username:</label>
@@ -17,6 +17,6 @@ export function SignIn() {
                         
                 <input className="bg-red p-4 text-white rounded" type="submit" name="Sign In" value="Sign In" />
                     </form>
-                </section>
+                </main>
     )
 }

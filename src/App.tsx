@@ -2,6 +2,7 @@ import { Homepage } from './pages/Homepage/Homepage'
 import { Categories } from './pages/Categories/Categories';
 import { Header } from './Components/Header/Header';
 import {Routes, Route} from 'react-router-dom'
+import { SignUp } from './pages/SignUp/SignUp';
 function App() {
   return (
     
@@ -9,7 +10,8 @@ function App() {
         <Header />
         <Routes>
         <Route path="/" element={<Homepage />} />
-      <Route path="/categories" element={<Categories />} />
+        <Route path="/categories" element={<Categories />} />
+        <Route path = "/signup" element={<SignUp />} />
       </Routes>
     </div>
 
