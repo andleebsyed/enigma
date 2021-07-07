@@ -15,7 +15,7 @@ export function Question() {
         <Right />
         <Wrong />
         <General />
-        <button className="text-white bg-blue font-bold p-1 w-20  sm:p-2 ml-3 sm:mr-24 rounded self-end">
+        <button className="text-white bg-blue font-bold p-2 w-40  rounded ">
           Skip
         </button>
       </main>
