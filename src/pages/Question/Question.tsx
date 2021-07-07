@@ -1,15 +1,17 @@
 import { General } from "../../Components/Options/General"
 import { Right } from "../../Components/Options/Right"
 import { Wrong } from "../../Components/Options/Wrong"
+import { QuestionPageQuizInfo } from "../../Components/QuestionPageQuizInfo/QuestionPageQuizInfo"
 
 export function Question() {
     
     return (
         <div className="min-h-screen bg-grey">
-            <section className="flex justify-between">
+            {/* <section className="flex justify-between">
                 <span className="text-white font-bold m-2">Question 0/0</span>
                 <span className="text-white font-bold m-2">Score:100</span>
-            </section>
+            </section> */}
+            <QuestionPageQuizInfo />
             
             <main className="flex flex-col items-center ml-2 mr-2 mt-16 ">
                 <div className="bg-grey-extralight rounded mb-4 md:w-4/5">

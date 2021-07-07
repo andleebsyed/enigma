@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router"
 export function SignIn() {
     const navigate = useNavigate()
-    function SignInSubmitHandler(event) {
+    function SignInSubmitHandler(event:React.SyntheticEvent) {
         
         event.preventDefault();
         navigate('/categories', {replace: true})
