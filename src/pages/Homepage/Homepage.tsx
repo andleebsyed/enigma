@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export function Homepage() {
   return (
     <main className="flex flex-col items-center justify-center min-h-screen bg-grey">
@@ -6,9 +8,11 @@ export function Homepage() {
         An interactive Quiz where you can test your knowledge about different
         fields
       </p>
-      <button className="bg-red text-white font-bold p-4 pl-14 pr-14 rounded mt-8">
-        Let's Play
-      </button>
+      <Link to="/access">
+        <button className="bg-red text-white font-bold p-4 pl-14 pr-14 rounded mt-8">
+          Let's Play
+        </button>
+      </Link>
     </main>
   );
 }
