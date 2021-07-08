@@ -1,4 +1,4 @@
-import { Homepage } from "./pages/Homepage/Homepage";
+import { Access } from "./pages/Access/Access";
 import { Categories } from "./pages/Categories/Categories";
 import { Header } from "./Components/Header/Header";
 import { Routes, Route } from "react-router-dom";
@@ -11,7 +11,7 @@ function App() {
     <div className="bg-grey h-screen">
       <Header />
       <Routes>
-        <Route path="/" element={<Homepage />} />
+        <Route path="/access" element={<Access />} />
         <Route path="/categories" element={<Categories />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/question" element={<Question />} />

@@ -1,7 +1,7 @@
 import { Intro } from "../../Components/Intro/Intro";
 import { SignIn } from "../../Components/SignIn/SignIn";
 
-export function Homepage() {
+export function Access() {
   return (
     <div>
       <main className="flex flex-row justify-around flex-wrap bg-grey">
