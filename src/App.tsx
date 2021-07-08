@@ -6,11 +6,13 @@ import { SignUp } from "./pages/SignUp/SignUp";
 import { Question } from "./pages/Question/Question";
 import { Results } from "./pages/Results/Results";
 import { Leaderboard } from "./pages/Leaderboard/Leaderboard";
+import { Homepage } from "./pages/Homepage/Homepage";
 function App() {
   return (
     <div className="bg-grey h-screen">
       <Header />
       <Routes>
+        <Route path="/" element={<Homepage />} />
         <Route path="/access" element={<Access />} />
         <Route path="/categories" element={<Categories />} />
         <Route path="/signup" element={<SignUp />} />
