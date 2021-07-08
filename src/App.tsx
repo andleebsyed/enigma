@@ -5,6 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import { SignUp } from "./pages/SignUp/SignUp";
 import { Question } from "./pages/Question/Question";
 import { Results } from "./pages/Results/Results";
+import { Leaderboard } from "./pages/Leaderboard/Leaderboard";
 function App() {
   return (
     <div className="bg-grey h-screen">
@@ -15,6 +16,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/question" element={<Question />} />
         <Route path="/results" element={<Results />} />
+        <Route path="/leaderboard" element={<Leaderboard />} />
       </Routes>
     </div>
   );
