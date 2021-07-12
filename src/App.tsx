@@ -16,7 +16,7 @@ function App() {
         <Route path="/access" element={<Access />} />
         <Route path="/categories" element={<Categories />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/question" element={<Question />} />
+        <Route path="/question/:chosenQuizName" element={<Question />} />
         <Route path="/results" element={<Results />} />
         <Route path="/leaderboard" element={<Leaderboard />} />
       </Routes>
