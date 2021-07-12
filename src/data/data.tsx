@@ -1,16 +1,7 @@
 // import { CATEGORYDATA } from "../Components/QuizCard/QuizCard";
-export type CATEGORYDATA = {
-  quizName: string;
-  description: string;
-  questions: {
-    question: string;
-    options: string[];
-    correctOption: string;
-  }[];
-};
-export type QUIZCATEGORIES = {
-  quizCategories: CATEGORYDATA[];
-};
+
+import { QUIZCATEGORIES } from "./data.types";
+
 export const data: QUIZCATEGORIES = {
   quizCategories: [
     {

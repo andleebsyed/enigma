@@ -1,12 +1,6 @@
 import { General } from "../Options/General";
+import { QUESTIONS } from "./QuizQuestions.types";
 
-type QUESTIONS = {
-  questions: {
-    question: string;
-    options: string[];
-    correctOption: string;
-  }[];
-};
 export function QuizQuestion({ questions }: QUESTIONS) {
   return (
     <>
