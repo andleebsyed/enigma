@@ -5,15 +5,18 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { DataProvider } from "./context/quizdata-context";
+import { QuizPerformanceProvider } from "./context/quizPerformance.context";
 
 ReactDOM.render(
-  <DataProvider>
-    <BrowserRouter>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    </BrowserRouter>
-  </DataProvider>,
+  <QuizPerformanceProvider>
+    <DataProvider>
+      <BrowserRouter>
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+      </BrowserRouter>
+    </DataProvider>
+  </QuizPerformanceProvider>,
   document.getElementById("root")
 );
 
