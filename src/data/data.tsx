@@ -66,7 +66,7 @@ export const data: QUIZCATEGORIES = {
         {
           question:
             "AVENGERS: AGE OF ULTRON: What word does Tony utter that makes Steve say, 'Language'?",
-          options: ["Shit!", "Crap!", "Asshole!", "Idiot!"],
+          options: ["Shit!", "Crap!", "Duffer!", "Idiot!"],
           correctOption: "Shit!",
         },
         {
