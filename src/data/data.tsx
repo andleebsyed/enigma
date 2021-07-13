@@ -237,7 +237,7 @@ export const data: QUIZCATEGORIES = {
         {
           question: "What kind of substance makes litmus paper turn blue?",
           options: ["Acid", "Salt", "Alkali", "Base"],
-          correctOption: " Antoine Lavoisier",
+          correctOption: "Alkali",
         },
         {
           question: "Who discovered X-rays?",
