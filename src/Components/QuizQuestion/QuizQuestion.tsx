@@ -15,7 +15,6 @@ export function QuizQuestion({ questions }: QUESTIONS) {
   const [questionIteratorIndex, setQuestionIteratorIndex] = useState<number>(0);
 
   useEffect(() => {
-    console.log("useefffect running");
     setQuizPerformance({
       ...quizPerformance,
       totalQuestions: questions.length,
@@ -23,11 +22,6 @@ export function QuizQuestion({ questions }: QUESTIONS) {
   }, []);
 
   function ToRunAfterOptionHit(scoreUpdate: number) {
-    // setQuizPerformance({
-    //   ...quizPerformance,
-
-    //   score: quizPerformance!.score + scoreUpdate,
-    // });
     setTimeout(() => {
       setQuestionIteratorIndex(questionIteratorIndex + 1);
       setQuizPerformance({
@@ -69,7 +63,7 @@ export function QuizQuestion({ questions }: QUESTIONS) {
   return (
     <>
       <div className="bg-grey-extralight rounded mb-4 lg:w-3/5 md:w-4/5 sm:h-20">
-        <p className="font-extrabold text-white break-all p-4 ">
+        <p className="font-extrabold text-white break-words p-4 ">
           {questions[questionIteratorIndex].question}
         </p>
       </div>
