@@ -1,8 +1,16 @@
+import { useQuizPerformance } from "../../context/quizPerformance.context";
+
 export function QuizPerformance() {
-    return (
-        <section className="flex justify-between">
-        <span className="text-white font-bold m-2">Question 0/0</span>
-        <span className="text-white font-bold m-2">Score:100</span>
+  const { quizPerformance } = useQuizPerformance();
+  return (
+    <section className="flex justify-between">
+      <span className="text-white font-bold m-2">
+        Question: {quizPerformance.currentQuestion}/
+        {quizPerformance.totalQuestions}
+      </span>
+      <span className="text-white font-bold m-2">
+        Score: {quizPerformance.score}
+      </span>
     </section>
-    )
+  );
 }
