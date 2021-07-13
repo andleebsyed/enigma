@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useQuizPerformance } from "../../context/quizPerformance.context";
 import { QUESTIONS } from "./QuizQuestions.types";
 
@@ -13,6 +14,7 @@ export function QuizQuestion({ questions }: QUESTIONS) {
   const [bgOptions, setBgOptions] = useState<string[]>(initialState);
   const { quizPerformance, setQuizPerformance } = useQuizPerformance();
   const [questionIteratorIndex, setQuestionIteratorIndex] = useState<number>(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setQuizPerformance({
@@ -21,24 +23,19 @@ export function QuizQuestion({ questions }: QUESTIONS) {
     });
   }, []);
 
-  function ToRunAfterOptionHit(scoreUpdate: number) {
+  function ToRunAfterOptionHit(scoreUpdate: number, ifSkip: boolean) {
+    const timer = ifSkip ? 0 : 2000;
     setTimeout(() => {
-      setQuestionIteratorIndex(questionIteratorIndex + 1);
+      questionIteratorIndex + 1 === quizPerformance.totalQuestions
+        ? navigate("/performance")
+        : setQuestionIteratorIndex(questionIteratorIndex + 1);
       setQuizPerformance({
         ...quizPerformance,
         currentQuestion: quizPerformance.currentQuestion + 1,
         score: quizPerformance.score + scoreUpdate,
       });
       setBgOptions(initialState);
-    }, 2000);
-  }
-
-  function skipButtonHandler() {
-    setQuestionIteratorIndex(() => questionIteratorIndex + 1);
-    setQuizPerformance({
-      ...quizPerformance,
-      currentQuestion: quizPerformance.currentQuestion + 1,
-    });
+    }, timer);
   }
 
   function optionHitHandler(
@@ -51,13 +48,13 @@ export function QuizQuestion({ questions }: QUESTIONS) {
     if (choosenOption === correctOption) {
       newBgOptions[ourOptionIndex] = "bg-green";
       setBgOptions(newBgOptions);
-      ToRunAfterOptionHit(5);
+      ToRunAfterOptionHit(5, false);
     } else {
       const correctOptionIndex = options.indexOf(correctOption);
       newBgOptions[correctOptionIndex] = "bg-green";
       newBgOptions[ourOptionIndex] = "bg-red";
       setBgOptions(newBgOptions);
-      ToRunAfterOptionHit(-2);
+      ToRunAfterOptionHit(-2, false);
     }
   }
   return (
@@ -83,7 +80,7 @@ export function QuizQuestion({ questions }: QUESTIONS) {
         </button>
       ))}
       <button
-        onClick={() => skipButtonHandler()}
+        onClick={() => ToRunAfterOptionHit(0, true)}
         className="text-white bg-blue font-bold p-2 w-40  rounded "
       >
         Skip
