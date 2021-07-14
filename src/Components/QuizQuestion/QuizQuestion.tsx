@@ -26,7 +26,6 @@ export function QuizQuestion({ questions }: QUESTIONS) {
   }, []);
 
   function ToRunAfterOptionHit(scoreUpdate: number, userResponse: string) {
-    // const timer = ifSkip ? 0 : 2000;
     const timer = userResponse === "skip" ? 0 : 2000;
     setTimeout(() => {
       questionIteratorIndex + 1 === quizPerformance.totalQuestions
@@ -51,11 +50,6 @@ export function QuizQuestion({ questions }: QUESTIONS) {
           questionsAttempted: results.questionsAttempted + 1,
         });
       }
-      // if (!ifSkip)
-      //   setResults({
-      //     ...results,
-      //     questionsAttempted: results.questionsAttempted + 1,
-      //   });
     }, timer);
   }
 
