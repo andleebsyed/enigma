@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export function Leaderboard() {
   return (
     <div className="flex justify-center m-4 md:mt-8">
@@ -31,9 +33,11 @@ export function Leaderboard() {
         </section>
 
         <footer className="flex justify-center mt-4 ">
-          <button className="bg-blue text-white font-bold p-2 rounded">
-            Play Again
-          </button>
+          <Link to="/categories">
+            <button className="bg-blue text-white font-bold p-2 rounded">
+              Play Again
+            </button>
+          </Link>
         </footer>
       </main>
     </div>
