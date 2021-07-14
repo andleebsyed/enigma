@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuizPerformance } from "../../context/quizPerformance.context";
+import { useResults } from "../../context/quizResults.context";
 import { QUESTIONS } from "./QuizQuestions.types";
 
 export function QuizQuestion({ questions }: QUESTIONS) {
@@ -12,8 +13,9 @@ export function QuizQuestion({ questions }: QUESTIONS) {
   ];
 
   const [bgOptions, setBgOptions] = useState<string[]>(initialState);
-  const { quizPerformance, setQuizPerformance } = useQuizPerformance();
   const [questionIteratorIndex, setQuestionIteratorIndex] = useState<number>(0);
+  const { quizPerformance, setQuizPerformance } = useQuizPerformance();
+  const { results, setResults } = useResults();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,8 +25,9 @@ export function QuizQuestion({ questions }: QUESTIONS) {
     });
   }, []);
 
-  function ToRunAfterOptionHit(scoreUpdate: number, ifSkip: boolean) {
-    const timer = ifSkip ? 0 : 2000;
+  function ToRunAfterOptionHit(scoreUpdate: number, userResponse: string) {
+    // const timer = ifSkip ? 0 : 2000;
+    const timer = userResponse === "skip" ? 0 : 2000;
     setTimeout(() => {
       questionIteratorIndex + 1 === quizPerformance.totalQuestions
         ? navigate("/results")
@@ -35,6 +38,24 @@ export function QuizQuestion({ questions }: QUESTIONS) {
         score: quizPerformance.score + scoreUpdate,
       });
       setBgOptions(initialState);
+      if (userResponse === "correct") {
+        setResults({
+          ...results,
+          correct: results.correct + 1,
+          questionsAttempted: results.questionsAttempted + 1,
+        });
+      } else if (userResponse === "incorrect") {
+        setResults({
+          ...results,
+          incorrect: results.incorrect + 1,
+          questionsAttempted: results.questionsAttempted + 1,
+        });
+      }
+      // if (!ifSkip)
+      //   setResults({
+      //     ...results,
+      //     questionsAttempted: results.questionsAttempted + 1,
+      //   });
     }, timer);
   }
 
@@ -48,13 +69,15 @@ export function QuizQuestion({ questions }: QUESTIONS) {
     if (choosenOption === correctOption) {
       newBgOptions[ourOptionIndex] = "bg-green";
       setBgOptions(newBgOptions);
-      ToRunAfterOptionHit(5, false);
+
+      ToRunAfterOptionHit(5, "correct");
     } else {
       const correctOptionIndex = options.indexOf(correctOption);
       newBgOptions[correctOptionIndex] = "bg-green";
       newBgOptions[ourOptionIndex] = "bg-red";
       setBgOptions(newBgOptions);
-      ToRunAfterOptionHit(-2, false);
+      setResults({ ...results, incorrect: results.incorrect - 1 });
+      ToRunAfterOptionHit(-2, "incorrect");
     }
   }
   return (
@@ -80,7 +103,7 @@ export function QuizQuestion({ questions }: QUESTIONS) {
         </button>
       ))}
       <button
-        onClick={() => ToRunAfterOptionHit(0, true)}
+        onClick={() => ToRunAfterOptionHit(0, "skip")}
         className="text-white bg-blue font-bold p-2 w-40  rounded "
       >
         Skip
