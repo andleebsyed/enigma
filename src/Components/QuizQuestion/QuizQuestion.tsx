@@ -27,7 +27,7 @@ export function QuizQuestion({ questions }: QUESTIONS) {
     const timer = ifSkip ? 0 : 2000;
     setTimeout(() => {
       questionIteratorIndex + 1 === quizPerformance.totalQuestions
-        ? navigate("/performance")
+        ? navigate("/results")
         : setQuestionIteratorIndex(questionIteratorIndex + 1);
       setQuizPerformance({
         ...quizPerformance,
