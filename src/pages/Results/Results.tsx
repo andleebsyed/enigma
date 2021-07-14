@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
+import { useData } from "../../context/quizdata-context";
+import { useQuizPerformance } from "../../context/quizPerformance.context";
 
 export function Results() {
+  const { quizPerformance } = useQuizPerformance();
+  console.log("quizPerformance ", quizPerformance);
   return (
     <div className="flex justify-center m-3 mt-4">
       <main className="flex flex-col justify-center w-5/6 sm:w-2/4">
@@ -12,7 +16,7 @@ export function Results() {
         <section className="">
           <section className="w-full flex justify-between mb-4 text-white font-bold rounded text-xl p-2 bg-grey-extralight">
             <span>Total Questions</span>
-            <span>0</span>
+            <span>{quizPerformance.totalQuestions}</span>
           </section>
           <section className="flex justify-between mb-4 text-white font-bold rounded text-xl p-2 bg-grey-extralight">
             <span>Questions Attempted</span>
@@ -28,7 +32,7 @@ export function Results() {
           </section>
           <section className=" flex justify-between mb-4 text-white font-bold rounded text-xl p-2 bg-grey-extralight">
             <span>Total Score</span>
-            <span>0</span>
+            <span>{quizPerformance.score}</span>
           </section>
         </section>
 
