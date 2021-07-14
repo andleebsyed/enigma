@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { useData } from "../../context/quizdata-context";
 import { useQuizPerformance } from "../../context/quizPerformance.context";
 import { useResults } from "../../context/quizResults.context";
 
