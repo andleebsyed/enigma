@@ -15,7 +15,7 @@ export function QuizQuestion({ questions }: QUESTIONS) {
   const [bgOptions, setBgOptions] = useState<string[]>(initialState);
   const [questionIteratorIndex, setQuestionIteratorIndex] = useState<number>(0);
   const { quizPerformance, setQuizPerformance } = useQuizPerformance();
-  const { results, setResults } = useResults();
+  const { dispatch } = useResults();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,8 +25,8 @@ export function QuizQuestion({ questions }: QUESTIONS) {
     });
   }, []);
 
-  function ToRunAfterOptionHit(scoreUpdate: number, userResponse: string) {
-    const timer = userResponse === "skip" ? 0 : 2000;
+  function ToRunAfterOptionHit(scoreUpdate: number) {
+    const timer = scoreUpdate === 0 ? 0 : 2000;
     setTimeout(() => {
       questionIteratorIndex + 1 === quizPerformance.totalQuestions
         ? navigate("/results")
@@ -37,19 +37,6 @@ export function QuizQuestion({ questions }: QUESTIONS) {
         score: quizPerformance.score + scoreUpdate,
       });
       setBgOptions(initialState);
-      if (userResponse === "correct") {
-        setResults({
-          ...results,
-          correct: results.correct + 1,
-          questionsAttempted: results.questionsAttempted + 1,
-        });
-      } else if (userResponse === "incorrect") {
-        setResults({
-          ...results,
-          incorrect: results.incorrect + 1,
-          questionsAttempted: results.questionsAttempted + 1,
-        });
-      }
     }, timer);
   }
 
@@ -63,15 +50,15 @@ export function QuizQuestion({ questions }: QUESTIONS) {
     if (choosenOption === correctOption) {
       newBgOptions[ourOptionIndex] = "bg-green";
       setBgOptions(newBgOptions);
-
-      ToRunAfterOptionHit(5, "correct");
+      ToRunAfterOptionHit(5);
+      dispatch({ type: "correct" });
     } else {
       const correctOptionIndex = options.indexOf(correctOption);
       newBgOptions[correctOptionIndex] = "bg-green";
       newBgOptions[ourOptionIndex] = "bg-red";
       setBgOptions(newBgOptions);
-      setResults({ ...results, incorrect: results.incorrect - 1 });
-      ToRunAfterOptionHit(-2, "incorrect");
+      ToRunAfterOptionHit(-2);
+      dispatch({ type: "incorrect" });
     }
   }
   return (
@@ -97,7 +84,7 @@ export function QuizQuestion({ questions }: QUESTIONS) {
         </button>
       ))}
       <button
-        onClick={() => ToRunAfterOptionHit(0, "skip")}
+        onClick={() => ToRunAfterOptionHit(0)}
         className="text-white bg-blue font-bold p-2 w-40  rounded "
       >
         Skip
