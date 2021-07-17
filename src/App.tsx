@@ -8,17 +8,24 @@ import { Results } from "./pages/Results/Results";
 import { Leaderboard } from "./pages/Leaderboard/Leaderboard";
 import { Homepage } from "./pages/Homepage/Homepage";
 function App() {
+  function PrivateRoute(props: any) {
+    if (localStorage.getItem("token")) {
+      return <Route {...props} />;
+    } else {
+      return <Route {...props} element={<Access />} />;
+    }
+  }
   return (
     <div className="bg-grey h-screen">
       <Header />
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/access" element={<Access />} />
-        <Route path="/categories" element={<Categories />} />
+        <PrivateRoute path="/categories" element={<Categories />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/question/:chosenQuizName" element={<Question />} />
-        <Route path="/results" element={<Results />} />
-        <Route path="/leaderboard" element={<Leaderboard />} />
+        <PrivateRoute path="/question/:chosenQuizName" element={<Question />} />
+        <PrivateRoute path="/results" element={<Results />} />
+        <PrivateRoute path="/leaderboard" element={<Leaderboard />} />
       </Routes>
     </div>
   );
