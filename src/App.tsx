@@ -10,6 +10,7 @@ import { Homepage } from "./pages/Homepage/Homepage";
 function App() {
   function PrivateRoute(props: any) {
     if (localStorage.getItem("token")) {
+      console.log("permission granted");
       return <Route {...props} />;
     } else {
       return <Route {...props} element={<Access />} />;
