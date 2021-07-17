@@ -1,22 +1,31 @@
-import { createContext, useContext, useState } from "react";
-type RESULTSCONTEXT = {
-  results: { questionsAttempted: number; correct: number; incorrect: number };
-  setResults: Function;
-};
-const initialState = {
-  results: { questionsAttempted: 0, correct: 0, incorrect: 0 },
-  setResults: () => null,
-};
-const ResultsContext = createContext<RESULTSCONTEXT>(initialState);
+import React, { createContext, useContext, useReducer } from "react";
+import { quizResultsReducer } from "../reducers/quizResults.reducer";
+import { Results } from "../types/contexts.types";
 
-export function ResultsProvider({ children }: React.PropsWithChildren<{}>) {
-  const [results, setResults] = useState({
+const reducerInitialState = {
+  questionsAttempted: 0,
+  correct: 0,
+  incorrect: 0,
+};
+
+const contextInitialState = {
+  results: {
     questionsAttempted: 0,
     correct: 0,
     incorrect: 0,
-  });
+  },
+  dispatch: () => null,
+};
+const ResultsContext = createContext<Results>(contextInitialState);
+
+export function ResultsProvider({ children }: React.PropsWithChildren<{}>) {
+  const [results, dispatch] = useReducer(
+    quizResultsReducer,
+    reducerInitialState
+  );
+
   return (
-    <ResultsContext.Provider value={{ results, setResults }}>
+    <ResultsContext.Provider value={{ results, dispatch }}>
       {children}
     </ResultsContext.Provider>
   );
