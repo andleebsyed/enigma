@@ -22,9 +22,7 @@ export function SignIn() {
     };
     const response = await axios.post(BASE_URL + "/user/signin", userDetails);
     setSigninButtonText("Sign In");
-
-    console.log({ response });
-    if (response.data.status && response.data.allowUser) {
+    if (response.data.allowUser) {
       localStorage.setItem("token", response.data.token);
       navigate("/categories", { replace: true });
     } else {
