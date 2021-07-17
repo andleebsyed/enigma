@@ -1,13 +1,6 @@
 import { createContext, useContext, useState } from "react";
-export type QUIZPERFORMANCE = {
-  quizPerformance: {
-    currentQuestion: number;
-    totalQuestions: number | null;
-    score: number;
-  };
-  setQuizPerformance: Function;
-};
-const QuizPerformanceContext = createContext<QUIZPERFORMANCE>({
+import { QuizPerformance } from "../types/contexts.types";
+const QuizPerformanceContext = createContext<QuizPerformance>({
   quizPerformance: {
     currentQuestion: 0,
     totalQuestions: null,
