@@ -15,7 +15,7 @@ export function SignIn() {
     setSigninButtonText("Signing In...");
     const response = await UserSignIn(userCredentials);
     setSigninButtonText("Sign In");
-    if (response.allowUser) {
+    if ("allowUser" in response && response.allowUser) {
       localStorage.setItem("token", response.token);
       navigate("/categories", { replace: true });
     } else {

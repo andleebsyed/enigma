@@ -1,5 +1,11 @@
 import axios, { AxiosError } from "axios";
 import { BASE_URL } from "../ApiUrls/ApiUrls";
+type SignInResponse = {
+  status: boolean;
+  allowUser: boolean;
+  message: string;
+  token: string;
+};
 type UserData = {
   username: string;
   email: string;
@@ -25,8 +31,26 @@ export type duplicateError = {
 type ServerError = {
   status: boolean;
   errorDetail: string;
-  errorMessage: string;
+  message: string;
 };
+export function AuthHeaderHandler(token: string) {
+  axios.interceptors.request.use((req) => {
+    req.headers.authorization = token;
+    console.log("token added for further requests");
+    return req;
+  });
+}
+export function AxiosErrorHandler() {
+  axios.interceptors.response.use(
+    (res) => res,
+    (err) => {
+      if (err.response.status === 404) {
+        throw new Error(`${err.config.url} not found`);
+      }
+      throw err;
+    }
+  );
+}
 export async function UserSignUp(
   userData: UserData
 ): Promise<SignUpResponse | ServerError | duplicateError> {
@@ -43,7 +67,8 @@ export async function UserSignUp(
       BASE_URL + "/user/signup",
       userDetails
     );
-    // console.log("response data is ", response.data);
+    if (response.data.status) {
+    }
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -56,13 +81,15 @@ export async function UserSignUp(
 
     return {
       status: false,
-      errorMessage: "something went wrong",
+      message: "something went wrong",
       errorDetail: error?.message,
     };
   }
 }
 
-export async function UserSignIn(userCredentials: UserCredentials) {
+export async function UserSignIn(
+  userCredentials: UserCredentials
+): Promise<SignInResponse | ServerError> {
   try {
     const userDetails = {
       userDetails: {
@@ -73,6 +100,18 @@ export async function UserSignIn(userCredentials: UserCredentials) {
     const response = await axios.post(BASE_URL + "/user/signin", userDetails);
     return response.data;
   } catch (error) {
-    console.log("Error occurred while SIgning User In:: ", error.message);
+    if (axios.isAxiosError(error)) {
+      const serverError = error as AxiosError<ServerError>;
+
+      if (serverError && serverError.response) {
+        return serverError.response.data;
+      }
+    }
+
+    return {
+      status: false,
+      message: "something went wrong",
+      errorDetail: error?.message,
+    };
   }
 }

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { SignUpResponse, UserSignUp } from "../../ApiCalls/userAuth";
+import { AuthHeaderHandler, UserSignUp } from "../../ApiCalls/userAuth";
 
 export function SignUp() {
   const initialState = {
@@ -31,6 +31,8 @@ export function SignUp() {
       setSignUpButtonText("Sign Up");
       if (response.status && "token" in response) {
         localStorage.setItem("token", response.token);
+        AuthHeaderHandler(response.token);
+
         navigate("/categories");
       } else if ("existingField" in response) {
         setUserSignUpError({
