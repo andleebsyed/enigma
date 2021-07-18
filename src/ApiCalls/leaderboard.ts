@@ -31,7 +31,7 @@ export async function SaveToLeaderboard(quizPerformance: QuizPerformanceData) {
         return serverError.response.data;
       }
     }
-
+    console.log("error occured ", error);
     return {
       status: false,
       message: "something went wrong",
