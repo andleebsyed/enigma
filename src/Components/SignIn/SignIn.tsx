@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import axios from "axios";
-import { BASE_URL } from "../../ApiUrls/ApiUrls";
+import { UserSignIn } from "../../ApiCalls/userAuth";
 export function SignIn() {
   const navigate = useNavigate();
   const [userCredentials, setUserCredentials] = useState({
@@ -14,23 +13,14 @@ export function SignIn() {
     event.preventDefault();
     console.log(userCredentials);
     setSigninButtonText("Signing In...");
-    const userDetails = {
-      userDetails: {
-        username: userCredentials.username,
-        password: userCredentials.password,
-      },
-    };
-    const response = await axios.post(BASE_URL + "/user/signin", userDetails);
+    const response = await UserSignIn(userCredentials);
     setSigninButtonText("Sign In");
-    if (response.data.allowUser) {
-      localStorage.setItem("token", response.data.token);
+    if (response.allowUser) {
+      localStorage.setItem("token", response.token);
       navigate("/categories", { replace: true });
     } else {
       setLoginError("visible");
     }
-    // setTimeout(() => setSigninButtonText("Sign In"), 2000);
-    // setSigninButtonText("Sign In");
-    // navigate("/categories", { replace: true });
   }
   return (
     <main className="w-96 p-8 mt-10 bg-grey-light m-3">

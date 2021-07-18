@@ -1,7 +1,6 @@
-import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { BASE_URL } from "../../ApiUrls/ApiUrls";
+import { UserSignUp } from "../../ApiCalls/userAuth";
 
 export function SignUp() {
   const initialState = {
@@ -28,23 +27,16 @@ export function SignUp() {
       });
       setSignUpButtonText("Sign Up");
     } else {
-      const userDetails = {
-        userDetails: {
-          username: userData.username,
-          email: userData.email,
-          password: userData.password,
-        },
-      };
-      const response = await axios.post(BASE_URL + "/user/signup", userDetails);
+      const response = await UserSignUp(userData);
       setSignUpButtonText("Sign Up");
-      if (response.data.status) {
-        localStorage.setItem("token", response.data.token);
+      if (response.status) {
+        localStorage.setItem("token", response.token);
         navigate("/categories");
       } else {
         setUserSignUpError({
           ...userSignUpError,
           userSignUpErrorStatus: "visible",
-          userSignUpErrorMessage: `${response.data.existingField} already exists`,
+          userSignUpErrorMessage: `${response.existingField} already exists`,
         });
       }
     }
