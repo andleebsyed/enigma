@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { SaveToLeaderboard } from "../../ApiCalls/leaderboard";
 import { useQuizPerformance } from "../../context/quizPerformance.context";
 import { useResults } from "../../context/quizResults.context";
 import { QUESTIONS } from "./QuizQuestions.types";
@@ -25,18 +26,22 @@ export function QuizQuestion({ questions }: QUESTIONS) {
     });
   }, []);
 
-  function ToRunAfterOptionHit(scoreUpdate: number) {
+  async function ToRunAfterOptionHit(scoreUpdate: number) {
     const timer = scoreUpdate === 0 ? 0 : 2000;
     setTimeout(() => {
-      questionIteratorIndex + 1 === quizPerformance.totalQuestions
-        ? navigate("/results")
-        : setQuestionIteratorIndex(questionIteratorIndex + 1);
-      setQuizPerformance({
-        ...quizPerformance,
-        currentQuestion: quizPerformance.currentQuestion + 1,
-        score: quizPerformance.score + scoreUpdate,
-      });
-      setBgOptions(initialState);
+      if (questionIteratorIndex + 1 === quizPerformance.totalQuestions) {
+        navigate("/results");
+        // setQuizPerformance({...quizPerformance, score: quizPerformance.score})
+        // SaveToLeaderboard();
+      } else {
+        setQuestionIteratorIndex(questionIteratorIndex + 1);
+        setQuizPerformance({
+          ...quizPerformance,
+          currentQuestion: quizPerformance.currentQuestion + 1,
+          score: quizPerformance.score + scoreUpdate,
+        });
+        setBgOptions(initialState);
+      }
     }, timer);
   }
 

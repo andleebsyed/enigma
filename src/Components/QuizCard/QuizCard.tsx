@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { useQuizPerformance } from "../../context/quizPerformance.context";
+import { quizResultsReducer } from "../../reducers/quizResults.reducer";
 // import { Question } from "../../pages/Question/Question";
 
 export type CATEGORY = {
@@ -13,6 +15,7 @@ export type CATEGORY = {
   };
 };
 export function QuizCard({ category }: CATEGORY) {
+  const { quizPerformance, setQuizPerformance } = useQuizPerformance();
   return (
     <section className=" bg-grey-dark h-72 w-56 flex flex-col mt-4 m-4 items-center justify-evenly rounded">
       <h1 className="text-blue text-2xl font-bold mb-2">{category.quizName}</h1>
@@ -21,7 +24,15 @@ export function QuizCard({ category }: CATEGORY) {
         {category.description}
       </span>
       <Link to={`/question/${category.quizName}`}>
-        <button className="p-1 m-1  w-40 bg-red text-white font-semibold  relative top-40-0 rounded">
+        <button
+          onClick={() =>
+            setQuizPerformance({
+              ...quizPerformance,
+              quizName: category.quizName,
+            })
+          }
+          className="p-1 m-1  w-40 bg-red text-white font-semibold  relative top-40-0 rounded"
+        >
           Play Now
         </button>
       </Link>

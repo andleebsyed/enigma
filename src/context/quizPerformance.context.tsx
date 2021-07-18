@@ -5,6 +5,7 @@ const QuizPerformanceContext = createContext<QuizPerformance>({
     currentQuestion: 0,
     totalQuestions: null,
     score: 0,
+    quizName: "",
   },
   setQuizPerformance: () => null,
 });
@@ -16,6 +17,7 @@ export function QuizPerformanceProvider({
     currentQuestion: 1,
     totalQuestions: null,
     score: 0,
+    quizName: "",
   });
   return (
     <QuizPerformanceContext.Provider

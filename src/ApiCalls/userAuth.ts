@@ -5,6 +5,7 @@ type SignInResponse = {
   allowUser: boolean;
   message: string;
   token: string;
+  username: string;
 };
 type UserData = {
   username: string;

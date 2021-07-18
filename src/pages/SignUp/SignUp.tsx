@@ -31,6 +31,7 @@ export function SignUp() {
       setSignUpButtonText("Sign Up");
       if (response.status && "token" in response) {
         localStorage.setItem("token", response.token);
+
         AuthHeaderHandler(response.token);
 
         navigate("/categories");
