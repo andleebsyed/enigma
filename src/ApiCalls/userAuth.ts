@@ -29,7 +29,7 @@ export type duplicateError = {
   errorDetail: string;
   existingField: string;
 };
-type ServerError = {
+export type ServerError = {
   status: boolean;
   errorDetail: string;
   message: string;

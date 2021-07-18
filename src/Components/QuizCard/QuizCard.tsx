@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
 import { useQuizPerformance } from "../../context/quizPerformance.context";
-import { quizResultsReducer } from "../../reducers/quizResults.reducer";
-// import { Question } from "../../pages/Question/Question";
 
 export type CATEGORY = {
   category: {

@@ -1,6 +1,5 @@
 import { QuizCard } from "../../Components/QuizCard/QuizCard";
 import { useData } from "../../context/quizdata-context";
-// import { data } from "../../data/data";
 export function Categories() {
   const data = useData();
   return (
