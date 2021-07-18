@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { BASE_URL } from "../ApiUrls/ApiUrls";
 type UserData = {
   username: string;
@@ -10,7 +10,26 @@ type UserCredentials = {
   username: string;
   password: string;
 };
-export async function UserSignUp(userData: UserData) {
+export type SignUpResponse = {
+  status: boolean;
+  message: string;
+  token: string;
+};
+export type duplicateError = {
+  status: boolean;
+  code: number;
+  message: string;
+  errorDetail: string;
+  existingField: string;
+};
+type ServerError = {
+  status: boolean;
+  errorDetail: string;
+  errorMessage: string;
+};
+export async function UserSignUp(
+  userData: UserData
+): Promise<SignUpResponse | ServerError | duplicateError> {
   try {
     const userDetails = {
       userDetails: {
@@ -20,10 +39,26 @@ export async function UserSignUp(userData: UserData) {
       },
     };
 
-    const response = await axios.post(BASE_URL + "/user/signup", userDetails);
+    const response = await axios.post<SignUpResponse>(
+      BASE_URL + "/user/signup",
+      userDetails
+    );
+    // console.log("response data is ", response.data);
     return response.data;
   } catch (error) {
-    console.log("Error occurred while SIgning User Up:: ", error.message);
+    if (axios.isAxiosError(error)) {
+      const serverError = error as AxiosError<ServerError>;
+
+      if (serverError && serverError.response) {
+        return serverError.response.data;
+      }
+    }
+
+    return {
+      status: false,
+      errorMessage: "something went wrong",
+      errorDetail: error?.message,
+    };
   }
 }
 

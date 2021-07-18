@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserSignUp } from "../../ApiCalls/userAuth";
+import { SignUpResponse, UserSignUp } from "../../ApiCalls/userAuth";
 
 export function SignUp() {
   const initialState = {
@@ -29,10 +29,10 @@ export function SignUp() {
     } else {
       const response = await UserSignUp(userData);
       setSignUpButtonText("Sign Up");
-      if (response.status) {
+      if (response.status && "token" in response) {
         localStorage.setItem("token", response.token);
         navigate("/categories");
-      } else {
+      } else if ("existingField" in response) {
         setUserSignUpError({
           ...userSignUpError,
           userSignUpErrorStatus: "visible",
