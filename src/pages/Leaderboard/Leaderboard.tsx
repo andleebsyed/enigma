@@ -2,25 +2,32 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { BASE_URL } from "../../ApiUrls/ApiUrls";
-type LeaderboardData = {
+type SingleLeaderboardEntry = {
   _id: string;
   name: string;
   quizName: string;
-  score: string;
+  score: number;
   __v: number;
-}[];
+};
+type LeaderboardData = SingleLeaderboardEntry[];
 export function Leaderboard() {
   const [leaderboard, setLeaderboard] = useState<LeaderboardData>(
     {} as LeaderboardData
   );
-  //  const [isLeaderboard, setIsLeaderboard] = useState(false)
   useEffect(() => {
     async function Run() {
       const response = await axios.get(BASE_URL + "/leaderboard");
       console.log("response ", response);
-      setLeaderboard(response.data.data);
+      const ourLeaderboard = response.data.data
+        .sort(
+          (a: SingleLeaderboardEntry, b: SingleLeaderboardEntry) =>
+            b.score - a.score
+        )
+        .slice(0, 5);
+
+      console.log(ourLeaderboard);
+      setLeaderboard(ourLeaderboard);
       console.log(leaderboard);
-      // setIsLeaderboard(true)
     }
     Run();
   }, []);
@@ -40,7 +47,10 @@ export function Leaderboard() {
               <span>Score</span>
             </section>
             {leaderboard.map((user) => (
-              <section className="flex justify-between mb-4 text-white  rounded  p-2 ">
+              <section
+                key={user._id}
+                className="flex justify-between mb-4 text-white  rounded border border-grey-extralight p-2 "
+              >
                 <span>{user.name}</span>
                 <span>{user.quizName}</span>
                 <span>{user.score}</span>
