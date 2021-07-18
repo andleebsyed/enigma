@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { UserSignIn } from "../../ApiCalls/userAuth";
+import { useQuizPerformance } from "../../context/quizPerformance.context";
 export function SignIn() {
   const navigate = useNavigate();
   const [userCredentials, setUserCredentials] = useState({
@@ -9,6 +10,7 @@ export function SignIn() {
   });
   const [signinButtonText, setSigninButtonText] = useState("Sign In");
   const [loginError, setLoginError] = useState("invisible");
+  const { quizPerformance, setQuizPerformance } = useQuizPerformance();
   async function SignInSubmitHandler(event: React.SyntheticEvent) {
     event.preventDefault();
     console.log(userCredentials);
@@ -17,6 +19,8 @@ export function SignIn() {
     setSigninButtonText("Sign In");
     if ("allowUser" in response && response.allowUser) {
       localStorage.setItem("token", response.token);
+      localStorage.setItem("username", response.username);
+      setQuizPerformance({ ...quizPerformance, username: response.username });
       navigate("/categories", { replace: true });
     } else {
       setLoginError("visible");
