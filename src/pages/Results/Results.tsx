@@ -1,4 +1,7 @@
+import axios from "axios";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { BASE_URL } from "../../ApiUrls/ApiUrls";
 import { useQuizPerformance } from "../../context/quizPerformance.context";
 import { useResults } from "../../context/quizResults.context";
 
@@ -6,6 +9,25 @@ export function Results() {
   const { quizPerformance } = useQuizPerformance();
   const { results } = useResults();
   console.log("quizPerformance ", quizPerformance);
+  useEffect(() => {
+    async function Run() {
+      const userPerformanceData = {
+        userData: {
+          name: localStorage.getItem("username"),
+          quizName: quizPerformance.quizName,
+          score: quizPerformance.score,
+        },
+      };
+      const response = await axios.post(
+        BASE_URL + "/leaderboard",
+        userPerformanceData
+      );
+      if (response.data.status) {
+        console.log("user saved to leaderboard");
+      }
+    }
+    Run();
+  }, []);
   return (
     <div className="flex justify-center m-3 mt-4">
       <main className="flex flex-col justify-center w-5/6 sm:w-2/4">
