@@ -34,6 +34,16 @@ export type ServerError = {
   errorDetail: string;
   message: string;
 };
+
+export function setupAuthHeaderForServiceCalls(token: string) {
+  console.log("token applier running");
+  if (token) {
+    console.log("token found and applied");
+    return (axios.defaults.headers.common["Authorization"] = token);
+  }
+  console.log("token not found and not applied");
+  delete axios.defaults.headers.common["Authorization"];
+}
 export function AuthHeaderHandler(token: string) {
   axios.interceptors.request.use((req) => {
     req.headers.authorization = token;
@@ -115,4 +125,43 @@ export async function UserSignIn(
       errorDetail: error?.message,
     };
   }
+}
+
+export async function QuizData() {
+  try {
+    const response = await axios.get(BASE_URL + "/quizdata");
+    return response.data.quizCategories;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const serverError = error as AxiosError<ServerError>;
+
+      if (serverError && serverError.response) {
+        return serverError.response.data;
+      }
+    }
+
+    return {
+      status: false,
+      message: "something went wrong",
+      errorDetail: error?.message,
+    };
+  }
+}
+
+export function setupAuthExceptionHandler(navigate: Function) {
+  console.log("401 tackled");
+  const UNAUTHORIZED = 401;
+  axios.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      if (error?.response?.status === UNAUTHORIZED) {
+        // dispatchAuth({ type: "LOGOUT_USER" });
+        console.log("error handler ran successsfully");
+        localStorage.clear();
+        navigate("/access", { replace: true });
+        // return true;
+      }
+      return Promise.reject(error);
+    }
+  );
 }
