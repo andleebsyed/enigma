@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { setupAuthExceptionHandler } from "../../ApiCalls/userAuth";
 import { BASE_URL } from "../../ApiUrls/ApiUrls";
 type SingleLeaderboardEntry = {
   _id: string;
@@ -14,9 +15,14 @@ export function Leaderboard() {
   const [leaderboard, setLeaderboard] = useState<LeaderboardData>(
     {} as LeaderboardData
   );
+  const navigate = useNavigate();
+  setupAuthExceptionHandler(navigate);
+  // const UNAUTHORIZED = useParams();
+
   useEffect(() => {
     async function Run() {
       const response = await axios.get(BASE_URL + "/leaderboard");
+
       console.log("response ", response);
       const ourLeaderboard = response.data.data
         .sort(
@@ -24,10 +30,7 @@ export function Leaderboard() {
             b.score - a.score
         )
         .slice(0, 5);
-
-      console.log(ourLeaderboard);
       setLeaderboard(ourLeaderboard);
-      console.log(leaderboard);
     }
     Run();
   }, []);

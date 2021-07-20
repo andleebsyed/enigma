@@ -20,8 +20,9 @@ export async function SaveToLeaderboard(quizPerformance: QuizPerformanceData) {
       BASE_URL + "/leaderboard",
       userPerformanceData
     );
-    if (response.data.status) {
-      console.log("user saved to leaderboard");
+    if (response.data.status === 401) {
+      return { status: false };
+      //   console.log("user saved to leaderboard");
     }
   } catch (error) {
     if (axios.isAxiosError(error)) {

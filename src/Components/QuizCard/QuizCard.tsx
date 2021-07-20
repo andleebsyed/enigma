@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useQuizPerformance } from "../../context/quizPerformance.context";
 
@@ -14,6 +15,7 @@ export type CATEGORY = {
 };
 export function QuizCard({ category }: CATEGORY) {
   const { quizPerformance, setQuizPerformance } = useQuizPerformance();
+
   return (
     <section className=" bg-grey-dark h-72 w-56 flex flex-col mt-4 m-4 items-center justify-evenly rounded">
       <h1 className="text-blue text-2xl font-bold mb-2">{category.quizName}</h1>
