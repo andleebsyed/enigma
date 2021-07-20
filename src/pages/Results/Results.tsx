@@ -1,32 +1,24 @@
-import axios from "axios";
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
+// import axios from "axios";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { SaveToLeaderboard } from "../../ApiCalls/leaderboard";
-import { BASE_URL } from "../../ApiUrls/ApiUrls";
+// import { BASE_URL } from "../../ApiUrls/ApiUrls";
 import { useQuizPerformance } from "../../context/quizPerformance.context";
 import { useResults } from "../../context/quizResults.context";
 
 export function Results() {
   const { quizPerformance } = useQuizPerformance();
   const { results } = useResults();
-  console.log("quizPerformance ", quizPerformance);
+  const navigate = useNavigate();
+  const [userAuth, setUserAuth] = useState(true);
   useEffect(() => {
     async function Run() {
-      // const userPerformanceData = {
-      //   userData: {
-      //     name: localStorage.getItem("username"),
-      //     quizName: quizPerformance.quizName,
-      //     score: quizPerformance.score,
-      //   },
-      // };
-      // const response = await axios.post(
-      //   BASE_URL + "/leaderboard",
-      //   userPerformanceData
-      // );
-      // if (response.data.status) {
-      //   console.log("user saved to leaderboard");
-      // }
-      await SaveToLeaderboard(quizPerformance);
+      const response = await SaveToLeaderboard(quizPerformance);
+      if (response?.status === false) {
+        setUserAuth(false);
+        localStorage.clear();
+        window.alert("Can't Save your results as you are not logged in");
+      }
     }
     Run();
   }, []);
@@ -63,7 +55,13 @@ export function Results() {
 
         <footer className="flex justify-between mt-4 ">
           <Link to="/leaderboard">
-            <button className="bg-blue text-white font-bold p-2 rounded">
+            <button
+              onClick={() => {
+                if (!userAuth)
+                  return window.alert("You are not authorized, please login.");
+              }}
+              className="bg-blue text-white font-bold p-2 rounded"
+            >
               Leaderboard
             </button>
           </Link>
