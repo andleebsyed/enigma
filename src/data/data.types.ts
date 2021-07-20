@@ -14,3 +14,8 @@ export type CATEGORYDATA = {
 export type QUIZCATEGORIES = {
   quizCategories: CATEGORYDATA[];
 };
+
+export type QuizDataContext = {
+  data: QUIZCATEGORIES;
+  setData: Function;
+};
