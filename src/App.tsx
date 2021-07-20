@@ -7,15 +7,28 @@ import { Question } from "./pages/Question/Question";
 import { Results } from "./pages/Results/Results";
 import { Leaderboard } from "./pages/Leaderboard/Leaderboard";
 import { Homepage } from "./pages/Homepage/Homepage";
+import { useEffect } from "react";
+import { QuizData } from "./ApiCalls/userAuth";
+import { useData } from "./context/quizdata-context";
 function App() {
+  const { data, setData } = useData();
   function PrivateRoute(props: any) {
     if (localStorage.getItem("token")) {
       console.log("permission granted");
       return <Route {...props} />;
     } else {
-      return <Route {...props} element={<Access />} />;
+      return <Route {...props} path="/access" element={<Access />} />;
     }
   }
+
+  useEffect(() => {
+    async function Run() {
+      const response = await QuizData();
+      setData({ ...data, quizCategories: response });
+    }
+    Run();
+  }, []);
+  console.log("data is ", data);
   return (
     <div className="bg-grey h-screen">
       <Header />
