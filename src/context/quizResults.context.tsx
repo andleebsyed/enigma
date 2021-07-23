@@ -6,6 +6,7 @@ const reducerInitialState = {
   questionsAttempted: 0,
   correct: 0,
   incorrect: 0,
+  score: 0,
 };
 
 const contextInitialState = {
@@ -13,6 +14,7 @@ const contextInitialState = {
     questionsAttempted: 0,
     correct: 0,
     incorrect: 0,
+    score: 0,
   },
   dispatch: () => null,
 };
