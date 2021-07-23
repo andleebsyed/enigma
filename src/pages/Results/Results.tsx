@@ -1,27 +1,14 @@
-// import axios from "axios";
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { SaveToLeaderboard } from "../../ApiCalls/leaderboard";
-// import { BASE_URL } from "../../ApiUrls/ApiUrls";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+
 import { useQuizPerformance } from "../../context/quizPerformance.context";
 import { useResults } from "../../context/quizResults.context";
 
 export function Results() {
   const { quizPerformance } = useQuizPerformance();
   const { results } = useResults();
-  const navigate = useNavigate();
   const [userAuth, setUserAuth] = useState(true);
-  useEffect(() => {
-    async function Run() {
-      const response = await SaveToLeaderboard(quizPerformance);
-      if (response?.status === false) {
-        setUserAuth(false);
-        localStorage.clear();
-        window.alert("Can't Save your results as you are not logged in");
-      }
-    }
-    Run();
-  }, []);
+
   return (
     <div className="flex justify-center m-3 mt-4">
       <main className="flex flex-col justify-center w-5/6 sm:w-2/4">
@@ -49,7 +36,7 @@ export function Results() {
           </section>
           <section className=" flex justify-between mb-4 text-white font-bold rounded text-xl p-2 bg-grey-extralight">
             <span>Total Score</span>
-            <span>{quizPerformance.score}</span>
+            <span>{results.score}</span>
           </section>
         </section>
 
