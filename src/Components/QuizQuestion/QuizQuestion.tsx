@@ -66,14 +66,14 @@ export function QuizQuestion({ questions }: QUESTIONS) {
       newBgOptions[ourOptionIndex] = "bg-green";
       setBgOptions(newBgOptions);
       ToRunAfterOptionHit(5);
-      dispatch({ type: "correct" });
+      dispatch({ type: "CORRECT" });
     } else {
       const correctOptionIndex = options.indexOf(correctOption);
       newBgOptions[correctOptionIndex] = "bg-green";
       newBgOptions[ourOptionIndex] = "bg-red";
       setBgOptions(newBgOptions);
       ToRunAfterOptionHit(-2);
-      dispatch({ type: "incorrect" });
+      dispatch({ type: "INCORRECT" });
     }
   }
   return (

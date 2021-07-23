@@ -1,4 +1,4 @@
 export type Action =
-  | { type: "correct" }
-  | { type: "incorrect" }
+  | { type: "CORRECT" }
+  | { type: "INCORRECT" }
   | { type: "RESET" };

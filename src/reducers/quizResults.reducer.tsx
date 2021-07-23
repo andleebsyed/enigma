@@ -11,14 +11,14 @@ export function quizResultsReducer(
   action: Action
 ) {
   switch (action.type) {
-    case "correct":
+    case "CORRECT":
       return {
         ...resultsState,
         correct: resultsState.correct + 1,
         questionsAttempted: resultsState.questionsAttempted + 1,
         score: resultsState.score + 5,
       };
-    case "incorrect":
+    case "INCORRECT":
       return {
         ...resultsState,
         incorrect: resultsState.incorrect + 1,
