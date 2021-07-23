@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { BASE_URL } from "../ApiUrls/ApiUrls";
-import { ServerError } from "./userAuth";
+import { ServerError, setupAuthHeaderForServiceCalls } from "./userAuth";
 type QuizPerformanceData = {
   currentQuestion: number;
   totalQuestions: number | null;
@@ -9,6 +9,8 @@ type QuizPerformanceData = {
 };
 export async function SaveToLeaderboard(quizPerformance: QuizPerformanceData) {
   try {
+    setupAuthHeaderForServiceCalls(localStorage.getItem("token"));
+
     const userPerformanceData = {
       userData: {
         name: localStorage.getItem("username"),
@@ -16,13 +18,17 @@ export async function SaveToLeaderboard(quizPerformance: QuizPerformanceData) {
         score: quizPerformance.score,
       },
     };
+    console.log({ userPerformanceData });
     const response = await axios.post(
       BASE_URL + "/leaderboard",
       userPerformanceData
     );
-    if (response.data.status === 401) {
-      return { status: false };
-      //   console.log("user saved to leaderboard");
+    console.log({ response });
+    if (response.status === 401) {
+      console.log({ response });
+      return { authorized: false };
+    } else {
+      return { authorized: true };
     }
   } catch (error) {
     if (axios.isAxiosError(error)) {
