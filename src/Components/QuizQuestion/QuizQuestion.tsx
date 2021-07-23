@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import { SaveToLeaderboard } from "../../ApiCalls/leaderboard";
+import { SaveToLeaderboard } from "../../ApiCalls/leaderboard";
 import { useQuizPerformance } from "../../context/quizPerformance.context";
 import { useResults } from "../../context/quizResults.context";
 import { QUESTIONS } from "./QuizQuestions.types";
@@ -28,19 +28,29 @@ export function QuizQuestion({ questions }: QUESTIONS) {
 
   async function ToRunAfterOptionHit(scoreUpdate: number) {
     const timer = scoreUpdate === 0 ? 0 : 2000;
-    setTimeout(() => {
+    function ChangeOnUserAction() {
+      setQuizPerformance({
+        ...quizPerformance,
+        score: quizPerformance.score + scoreUpdate,
+      });
+      setBgOptions(initialState);
+    }
+    setTimeout(async () => {
       if (questionIteratorIndex + 1 === quizPerformance.totalQuestions) {
-        navigate("/results");
-        // setQuizPerformance({...quizPerformance, score: quizPerformance.score})
-        // SaveToLeaderboard();
+        ChangeOnUserAction();
+
+        const { authorized } = await SaveToLeaderboard(quizPerformance);
+        if (authorized) {
+          navigate("/results");
+        }
       } else {
-        setQuestionIteratorIndex(questionIteratorIndex + 1);
+        ChangeOnUserAction();
         setQuizPerformance({
           ...quizPerformance,
           currentQuestion: quizPerformance.currentQuestion + 1,
-          score: quizPerformance.score + scoreUpdate,
         });
-        setBgOptions(initialState);
+
+        setQuestionIteratorIndex(questionIteratorIndex + 1);
       }
     }, timer);
   }
