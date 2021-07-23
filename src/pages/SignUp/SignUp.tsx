@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import {
   ServerError,
   setupAuthHeaderForServiceCalls,
-  SignInResponse,
   SignUpResponse,
   UserSignUp,
 } from "../../ApiCalls/userAuth";

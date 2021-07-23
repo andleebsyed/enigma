@@ -1,8 +1,6 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FetchFromLeaderboard } from "../../ApiCalls/leaderboard";
-import { BASE_URL } from "../../ApiUrls/ApiUrls";
 import { useData } from "../../context/quizdata-context";
 export type SingleLeaderboardEntry = {
   _id: string;

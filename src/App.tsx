@@ -30,7 +30,6 @@ function App() {
     }
     Run();
   }, []);
-  console.log("data is ", data);
   return (
     <div className="bg-grey h-screen">
       <Header />
