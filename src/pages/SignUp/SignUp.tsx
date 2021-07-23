@@ -1,6 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthHeaderHandler, UserSignUp } from "../../ApiCalls/userAuth";
+import {
+  ServerError,
+  setupAuthHeaderForServiceCalls,
+  SignInResponse,
+  SignUpResponse,
+  UserSignUp,
+} from "../../ApiCalls/userAuth";
+import { useQuizPerformance } from "../../context/quizPerformance.context";
 
 export function SignUp() {
   const initialState = {
@@ -16,6 +23,20 @@ export function SignUp() {
   });
   const [signUpButtonText, setSignUpButtonText] = useState("Sign Up");
   const navigate = useNavigate();
+  const { quizPerformance, setQuizPerformance } = useQuizPerformance();
+  function SignInSuccess(response: SignUpResponse | ServerError) {
+    if ("token" in response) {
+      setupAuthHeaderForServiceCalls(response.token);
+      localStorage.setItem("token", response.token);
+      localStorage.setItem("username", response.username);
+      navigate("/categories", { replace: true });
+
+      setQuizPerformance({
+        ...quizPerformance,
+        username: response.username,
+      });
+    }
+  }
   async function SignUpSubmitHandler(event: React.SyntheticEvent) {
     event.preventDefault();
     setSignUpButtonText("Signing Up...");
@@ -30,10 +51,7 @@ export function SignUp() {
       const response = await UserSignUp(userData);
       setSignUpButtonText("Sign Up");
       if (response.status && "token" in response) {
-        localStorage.setItem("token", response.token);
-
-        AuthHeaderHandler(response.token);
-
+        SignInSuccess(response);
         navigate("/categories");
       } else if ("existingField" in response) {
         setUserSignUpError({
