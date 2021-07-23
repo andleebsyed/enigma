@@ -15,13 +15,18 @@ export function Leaderboard() {
     {} as LeaderboardData
   );
   const { data } = useData();
+  const [didMount, setDidMount] = useState(false);
   useEffect(() => {
+    setDidMount(true);
     async function Run() {
       const ourLeaderboard = await FetchFromLeaderboard();
       setLeaderboard(ourLeaderboard);
     }
-    Run();
-  }, [data]);
+    if (didMount) {
+      Run();
+    }
+    return () => setDidMount(false);
+  }, [didMount]);
   if (leaderboard.length > 0) {
     return (
       <div className="flex justify-center m-4 md:mt-8">

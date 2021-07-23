@@ -15,7 +15,6 @@ function App() {
   const { data, setData } = useData();
   function PrivateRoute(props: any) {
     if (localStorage.getItem("token")) {
-      console.log("permission granted");
       return <Route {...props} />;
     } else {
       return <Route {...props} path="/access" element={<Access />} />;
