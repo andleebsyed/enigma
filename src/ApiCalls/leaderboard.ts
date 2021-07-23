@@ -1,5 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { BASE_URL } from "../ApiUrls/ApiUrls";
+import { SingleLeaderboardEntry } from "../pages/Leaderboard/Leaderboard";
 import { ServerError, setupAuthHeaderForServiceCalls } from "./userAuth";
 type QuizPerformanceData = {
   currentQuestion: number;
@@ -45,4 +46,18 @@ export async function SaveToLeaderboard(quizPerformance: QuizPerformanceData) {
       errorDetail: error?.message,
     };
   }
+}
+
+export async function FetchFromLeaderboard() {
+  setupAuthHeaderForServiceCalls(localStorage.getItem("token"));
+  const response = await axios.get(BASE_URL + "/leaderboard");
+
+  console.log("response ", response);
+  const ourLeaderboard = response.data.data
+    .sort(
+      (a: SingleLeaderboardEntry, b: SingleLeaderboardEntry) =>
+        b.score - a.score
+    )
+    .slice(0, 5);
+  return ourLeaderboard;
 }

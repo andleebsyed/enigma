@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { setupAuthExceptionHandler } from "../../ApiCalls/userAuth";
+import { Link } from "react-router-dom";
+import { FetchFromLeaderboard } from "../../ApiCalls/leaderboard";
 import { BASE_URL } from "../../ApiUrls/ApiUrls";
-type SingleLeaderboardEntry = {
+import { useData } from "../../context/quizdata-context";
+export type SingleLeaderboardEntry = {
   _id: string;
   name: string;
   quizName: string;
@@ -15,25 +16,14 @@ export function Leaderboard() {
   const [leaderboard, setLeaderboard] = useState<LeaderboardData>(
     {} as LeaderboardData
   );
-  const navigate = useNavigate();
-  setupAuthExceptionHandler(navigate);
-  // const UNAUTHORIZED = useParams();
-
+  const { data } = useData();
   useEffect(() => {
     async function Run() {
-      const response = await axios.get(BASE_URL + "/leaderboard");
-
-      console.log("response ", response);
-      const ourLeaderboard = response.data.data
-        .sort(
-          (a: SingleLeaderboardEntry, b: SingleLeaderboardEntry) =>
-            b.score - a.score
-        )
-        .slice(0, 5);
+      const ourLeaderboard = await FetchFromLeaderboard();
       setLeaderboard(ourLeaderboard);
     }
     Run();
-  }, []);
+  }, [data]);
   if (leaderboard.length > 0) {
     return (
       <div className="flex justify-center m-4 md:mt-8">
@@ -75,24 +65,3 @@ export function Leaderboard() {
     return <div>loading...</div>;
   }
 }
-//  {
-/* <section className=" flex justify-between mb-4 text-white font-bold rounded text-xl p-2 bg-grey-extralight">
-            <span>defg</span>
-            <span>90</span>
-          </section>
-          <section className=" flex justify-between mb-4 text-white font-bold rounded text-xl p-2 bg-grey-extralight">
-            <span>hijkl</span>
-            <span>80</span>
-          </section>
-          <section className=" flex justify-between mb-4 text-white font-bold rounded text-xl p-2 bg-grey-extralight">
-            <span>mnopqrst</span>
-            <span>50</span>
-          </section> */
-//  }
-
-//  {
-/* <section className="flex justify-between mb-4 text-white font-bold rounded text-xl p-2 bg-grey-extralight">
-            <span>Abc</span>
-            <span>100</span>
-          </section> */
-//  }
