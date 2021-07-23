@@ -1,1 +1,4 @@
-export type Action = { type: "correct" } | { type: "incorrect" };
+export type Action =
+  | { type: "correct" }
+  | { type: "incorrect" }
+  | { type: "RESET" };

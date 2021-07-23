@@ -9,6 +9,11 @@ export type QuizPerformance = {
 };
 
 export type Results = {
-  results: { questionsAttempted: number; correct: number; incorrect: number };
+  results: {
+    questionsAttempted: number;
+    correct: number;
+    incorrect: number;
+    score: number;
+  };
   dispatch: React.Dispatch<any>;
 };
