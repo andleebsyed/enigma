@@ -1,11 +1,8 @@
 import { Link } from "react-router-dom";
-
-import { useQuizPerformance } from "../../context/quizPerformance.context";
-import { useResults } from "../../context/quizResults.context";
+import { useQuizPerformance } from "../../context/quizResults.context";
 
 export function Results() {
   const { quizPerformance } = useQuizPerformance();
-  const { results } = useResults();
 
   return (
     <div className="flex justify-center m-3 mt-4">
@@ -22,19 +19,19 @@ export function Results() {
           </section>
           <section className="flex justify-between mb-4 text-white font-bold rounded text-xl p-2 bg-grey-extralight">
             <span>Questions Attempted</span>
-            <span>{results.questionsAttempted}</span>
+            <span>{quizPerformance.questionsAttempted}</span>
           </section>
           <section className=" flex justify-between mb-4 text-white font-bold rounded text-xl p-2 bg-green">
             <span>Correct</span>
-            <span>{results.correct}</span>
+            <span>{quizPerformance.correct}</span>
           </section>
           <section className=" flex justify-between mb-4 text-white font-bold rounded text-xl p-2 bg-red">
             <span>Incorrect</span>
-            <span>{results.incorrect}</span>
+            <span>{quizPerformance.incorrect}</span>
           </section>
           <section className=" flex justify-between mb-4 text-white font-bold rounded text-xl p-2 bg-grey-extralight">
             <span>Total Score</span>
-            <span>{results.score}</span>
+            <span>{quizPerformance.score}</span>
           </section>
         </section>
 

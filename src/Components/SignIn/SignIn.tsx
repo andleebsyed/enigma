@@ -6,7 +6,7 @@ import {
   SignInResponse,
   UserSignIn,
 } from "../../ApiCalls/userAuth";
-import { useQuizPerformance } from "../../context/quizPerformance.context";
+// import { useQuizPerformance } from "../../context/quizResults.context";
 export function SignIn() {
   const navigate = useNavigate();
   const [userCredentials, setUserCredentials] = useState({
@@ -15,7 +15,7 @@ export function SignIn() {
   });
   const [signinButtonText, setSigninButtonText] = useState("Sign In");
   const [loginError, setLoginError] = useState("invisible");
-  const { quizPerformance, setQuizPerformance } = useQuizPerformance();
+  // const { dispatch } = useQuizPerformance();
 
   function SignInSuccess(response: SignInResponse | ServerError) {
     if ("token" in response) {
@@ -23,11 +23,7 @@ export function SignIn() {
       localStorage.setItem("token", response.token);
       localStorage.setItem("username", response.username);
       navigate("/categories", { replace: true });
-
-      setQuizPerformance({
-        ...quizPerformance,
-        username: response.username,
-      });
+      // dispatch({ type: "SET_USERNAME", payload: response.username });
     }
   }
   async function SignInSubmitHandler(event: React.SyntheticEvent) {

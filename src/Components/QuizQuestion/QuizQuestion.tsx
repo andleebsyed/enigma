@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SaveToLeaderboard } from "../../ApiCalls/leaderboard";
-import { useQuizPerformance } from "../../context/quizPerformance.context";
-import { useResults } from "../../context/quizResults.context";
+import { useQuizPerformance } from "../../context/quizResults.context";
 import { QUESTIONS } from "./QuizQuestions.types";
-
 export function QuizQuestion({ questions }: QUESTIONS) {
   const initialState = [
     "bg-grey-extralight",
@@ -15,16 +13,11 @@ export function QuizQuestion({ questions }: QUESTIONS) {
 
   const [bgOptions, setBgOptions] = useState<string[]>(initialState);
   const [questionIteratorIndex, setQuestionIteratorIndex] = useState<number>(0);
-  const { quizPerformance, setQuizPerformance } = useQuizPerformance();
-  const { results } = useResults();
-  const { dispatch } = useResults();
+  const { quizPerformance } = useQuizPerformance();
+  const { dispatch } = useQuizPerformance();
   const navigate = useNavigate();
-
   useEffect(() => {
-    setQuizPerformance({
-      ...quizPerformance,
-      totalQuestions: questions.length,
-    });
+    dispatch({ type: "SET_QUESTIONS_LENGTH", payload: questions.length });
   }, []);
 
   async function ToRunAfterOptionHit(scoreUpdate: number) {
@@ -36,17 +29,13 @@ export function QuizQuestion({ questions }: QUESTIONS) {
       if (questionIteratorIndex + 1 === quizPerformance.totalQuestions) {
         ChangeOnUserAction();
 
-        const { authorized } = await SaveToLeaderboard(results.score);
+        const { authorized } = await SaveToLeaderboard(quizPerformance.score);
         if (authorized) {
           navigate("/results");
         }
       } else {
         ChangeOnUserAction();
-        setQuizPerformance({
-          ...quizPerformance,
-          currentQuestion: quizPerformance.currentQuestion + 1,
-        });
-
+        dispatch({ type: "INCREMENT_QUESTION" });
         setQuestionIteratorIndex(questionIteratorIndex + 1);
       }
     }, timer);

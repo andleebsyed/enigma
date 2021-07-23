@@ -6,7 +6,7 @@ import {
   SignUpResponse,
   UserSignUp,
 } from "../../ApiCalls/userAuth";
-import { useQuizPerformance } from "../../context/quizPerformance.context";
+// import { useQuizPerformance } from "../../context/quizResults.context";
 
 export function SignUp() {
   const initialState = {
@@ -22,18 +22,13 @@ export function SignUp() {
   });
   const [signUpButtonText, setSignUpButtonText] = useState("Sign Up");
   const navigate = useNavigate();
-  const { quizPerformance, setQuizPerformance } = useQuizPerformance();
+  // const { quizPerformance, dispatch } = useQuizPerformance();
   function SignInSuccess(response: SignUpResponse | ServerError) {
     if ("token" in response) {
       setupAuthHeaderForServiceCalls(response.token);
       localStorage.setItem("token", response.token);
       localStorage.setItem("username", response.username);
       navigate("/categories", { replace: true });
-
-      setQuizPerformance({
-        ...quizPerformance,
-        username: response.username,
-      });
     }
   }
   async function SignUpSubmitHandler(event: React.SyntheticEvent) {

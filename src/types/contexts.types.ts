@@ -1,17 +1,11 @@
 export type QuizPerformance = {
   quizPerformance: {
-    currentQuestion: number;
-    totalQuestions: number | null;
-  };
-  setQuizPerformance: Function;
-};
-
-export type Results = {
-  results: {
     questionsAttempted: number;
     correct: number;
     incorrect: number;
     score: number;
+    currentQuestion: number;
+    totalQuestions: number;
   };
   dispatch: React.Dispatch<any>;
 };

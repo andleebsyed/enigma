@@ -1,6 +1,4 @@
 import { Link } from "react-router-dom";
-import { useQuizPerformance } from "../../context/quizPerformance.context";
-
 export type CATEGORY = {
   category: {
     quizName: string;
