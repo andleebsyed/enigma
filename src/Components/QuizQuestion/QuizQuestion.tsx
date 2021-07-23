@@ -17,8 +17,9 @@ export function QuizQuestion({ questions }: QUESTIONS) {
   const { dispatch } = useQuizPerformance();
   const navigate = useNavigate();
   useEffect(() => {
+    console.log("settting questions effect running");
     dispatch({ type: "SET_QUESTIONS_LENGTH", payload: questions.length });
-  }, []);
+  }, [dispatch, questions.length]);
 
   async function ToRunAfterOptionHit(scoreUpdate: number) {
     const timer = scoreUpdate === 0 ? 0 : 2000;
