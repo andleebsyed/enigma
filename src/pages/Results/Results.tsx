@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { useQuizPerformance } from "../../context/quizPerformance.context";
@@ -7,7 +6,6 @@ import { useResults } from "../../context/quizResults.context";
 export function Results() {
   const { quizPerformance } = useQuizPerformance();
   const { results } = useResults();
-  const [userAuth, setUserAuth] = useState(true);
 
   return (
     <div className="flex justify-center m-3 mt-4">
@@ -42,13 +40,7 @@ export function Results() {
 
         <footer className="flex justify-between mt-4 ">
           <Link to="/leaderboard">
-            <button
-              onClick={() => {
-                if (!userAuth)
-                  return window.alert("You are not authorized, please login.");
-              }}
-              className="bg-blue text-white font-bold p-2 rounded"
-            >
+            <button className="bg-blue text-white font-bold p-2 rounded">
               Leaderboard
             </button>
           </Link>
