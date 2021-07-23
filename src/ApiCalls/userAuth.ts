@@ -158,7 +158,8 @@ export function setupUserAuthorizationHandler(navigate: Function) {
       if (error?.response?.status === UNAUTHORIZED) {
         console.log("error handler ran successsfully");
         localStorage.clear();
-        navigate("/access", { replace: true });
+        navigate("/unauthorized", { replace: true });
+        // navigate("/access", { replace: true });
       }
       return Promise.reject(error);
     }

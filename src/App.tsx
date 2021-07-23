@@ -10,6 +10,7 @@ import { Homepage } from "./pages/Homepage/Homepage";
 import { useEffect } from "react";
 import { QuizData, setupUserAuthorizationHandler } from "./ApiCalls/userAuth";
 import { useData } from "./context/quizdata-context";
+import { AuthHandler } from "./pages/AuthHandler/AuthHandler";
 function App() {
   const navigate = useNavigate();
   const { data, setData } = useData();
@@ -39,7 +40,8 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <PrivateRoute path="/question/:chosenQuizName" element={<Question />} />
         <PrivateRoute path="/results" element={<Results />} />
-        <PrivateRoute path="/leaderboard" element={<Leaderboard />} />
+        <Route path="/leaderboard" element={<Leaderboard />} />
+        <Route path="/unauthorized" element={<AuthHandler />} />
       </Routes>
     </div>
   );
