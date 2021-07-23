@@ -14,9 +14,11 @@ export function Leaderboard() {
   const [leaderboard, setLeaderboard] = useState<LeaderboardData>(
     {} as LeaderboardData
   );
-  const { data } = useData();
+
   const [didMount, setDidMount] = useState(false);
+  const { data } = useData();
   useEffect(() => {
+    console.log("useEffect running");
     setDidMount(true);
     async function Run() {
       const ourLeaderboard = await FetchFromLeaderboard();
@@ -26,7 +28,7 @@ export function Leaderboard() {
       Run();
     }
     return () => setDidMount(false);
-  }, [didMount]);
+  }, [didMount, data]);
   if (leaderboard.length > 0) {
     return (
       <div className="flex justify-center m-4 md:mt-8">
