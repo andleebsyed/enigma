@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { UserSignIn } from "../../ApiCalls/userAuth";
+import {
+  ServerError,
+  setupAuthHeaderForServiceCalls,
+  SignInResponse,
+  UserSignIn,
+} from "../../ApiCalls/userAuth";
 import { useQuizPerformance } from "../../context/quizPerformance.context";
 export function SignIn() {
   const navigate = useNavigate();
@@ -11,17 +16,27 @@ export function SignIn() {
   const [signinButtonText, setSigninButtonText] = useState("Sign In");
   const [loginError, setLoginError] = useState("invisible");
   const { quizPerformance, setQuizPerformance } = useQuizPerformance();
+
+  function SignInSuccess(response: SignInResponse | ServerError) {
+    if ("token" in response) {
+      setupAuthHeaderForServiceCalls(response.token);
+      localStorage.setItem("token", response.token);
+      localStorage.setItem("username", response.username);
+      navigate("/categories", { replace: true });
+
+      setQuizPerformance({
+        ...quizPerformance,
+        username: response.username,
+      });
+    }
+  }
   async function SignInSubmitHandler(event: React.SyntheticEvent) {
     event.preventDefault();
-    console.log(userCredentials);
     setSigninButtonText("Signing In...");
     const response = await UserSignIn(userCredentials);
     setSigninButtonText("Sign In");
     if ("allowUser" in response && response.allowUser) {
-      localStorage.setItem("token", response.token);
-      localStorage.setItem("username", response.username);
-      setQuizPerformance({ ...quizPerformance, username: response.username });
-      navigate("/categories", { replace: true });
+      SignInSuccess(response);
     } else {
       setLoginError("visible");
     }
