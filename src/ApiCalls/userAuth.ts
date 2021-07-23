@@ -149,7 +149,7 @@ export async function QuizData() {
   }
 }
 
-export function setupAuthExceptionHandler(navigate: Function) {
+export function setupUserAuthorizationHandler(navigate: Function) {
   console.log("401 tackled");
   const UNAUTHORIZED = 401;
   axios.interceptors.response.use(
