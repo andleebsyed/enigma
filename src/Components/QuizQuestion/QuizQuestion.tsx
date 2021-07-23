@@ -16,6 +16,7 @@ export function QuizQuestion({ questions }: QUESTIONS) {
   const [bgOptions, setBgOptions] = useState<string[]>(initialState);
   const [questionIteratorIndex, setQuestionIteratorIndex] = useState<number>(0);
   const { quizPerformance, setQuizPerformance } = useQuizPerformance();
+  const { results } = useResults();
   const { dispatch } = useResults();
   const navigate = useNavigate();
 
@@ -29,17 +30,13 @@ export function QuizQuestion({ questions }: QUESTIONS) {
   async function ToRunAfterOptionHit(scoreUpdate: number) {
     const timer = scoreUpdate === 0 ? 0 : 2000;
     function ChangeOnUserAction() {
-      setQuizPerformance({
-        ...quizPerformance,
-        score: quizPerformance.score + scoreUpdate,
-      });
       setBgOptions(initialState);
     }
     setTimeout(async () => {
       if (questionIteratorIndex + 1 === quizPerformance.totalQuestions) {
         ChangeOnUserAction();
 
-        const { authorized } = await SaveToLeaderboard(quizPerformance);
+        const { authorized } = await SaveToLeaderboard(results.score);
         if (authorized) {
           navigate("/results");
         }

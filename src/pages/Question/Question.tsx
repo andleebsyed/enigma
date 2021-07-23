@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { QuizPerformance } from "../../Components/QuizPerformance/QuizPerformance";
 import { QuizQuestion } from "../../Components/QuizQuestion/QuizQuestion";
@@ -9,6 +10,9 @@ export function Question() {
   const chosenQuiz = data.quizCategories.find((singleQuiz) => {
     return singleQuiz.quizName === chosenQuizName;
   });
+  useEffect(() => {
+    localStorage.setItem("quizName", chosenQuizName);
+  }, []);
   return data.quizCategories.length > 0 ? (
     <div className="min-h-screen bg-grey">
       <QuizPerformance />

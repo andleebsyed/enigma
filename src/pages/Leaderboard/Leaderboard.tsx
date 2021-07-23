@@ -18,7 +18,6 @@ export function Leaderboard() {
   const [didMount, setDidMount] = useState(false);
   const { data } = useData();
   useEffect(() => {
-    console.log("useEffect running");
     setDidMount(true);
     async function Run() {
       const ourLeaderboard = await FetchFromLeaderboard();

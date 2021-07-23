@@ -2,21 +2,15 @@ import axios, { AxiosError } from "axios";
 import { BASE_URL } from "../ApiUrls/ApiUrls";
 import { SingleLeaderboardEntry } from "../pages/Leaderboard/Leaderboard";
 import { ServerError, setupAuthHeaderForServiceCalls } from "./userAuth";
-type QuizPerformanceData = {
-  currentQuestion: number;
-  totalQuestions: number | null;
-  score: number;
-  quizName: string;
-};
-export async function SaveToLeaderboard(quizPerformance: QuizPerformanceData) {
+export async function SaveToLeaderboard(score: number) {
   try {
     setupAuthHeaderForServiceCalls(localStorage.getItem("token"));
 
     const userPerformanceData = {
       userData: {
         name: localStorage.getItem("username"),
-        quizName: quizPerformance.quizName,
-        score: quizPerformance.score,
+        quizName: localStorage.getItem("quizName"),
+        score: score,
       },
     };
     console.log({ userPerformanceData });
