@@ -6,7 +6,6 @@ export function Categories() {
   const { data } = useData();
   const { dispatch } = useQuizPerformance();
   useEffect(() => {
-    console.log("reset effect ran");
     dispatch({ type: "RESET" });
   }, [dispatch]);
   return (

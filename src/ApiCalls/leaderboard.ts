@@ -46,8 +46,6 @@ export async function SaveToLeaderboard(score: number) {
 export async function FetchFromLeaderboard() {
   setupAuthHeaderForServiceCalls(localStorage.getItem("token"));
   const response = await axios.get(BASE_URL + "/leaderboard");
-
-  console.log("response ", response);
   const ourLeaderboard = response.data.data
     .sort(
       (a: SingleLeaderboardEntry, b: SingleLeaderboardEntry) =>

@@ -10,12 +10,9 @@ import {
 } from "../types/services.types";
 
 export function setupAuthHeaderForServiceCalls(token: string | null) {
-  console.log("token applier running");
   if (token) {
-    console.log("token found and applied");
     return (axios.defaults.headers.common["Authorization"] = token);
   }
-  console.log("token not found and not applied");
   delete axios.defaults.headers.common["Authorization"];
 }
 
@@ -106,16 +103,13 @@ export async function QuizData() {
 }
 
 export function setupUserAuthorizationHandler(navigate: Function) {
-  console.log("401 tackled");
   const UNAUTHORIZED = 401;
   axios.interceptors.response.use(
     (response) => response,
     (error) => {
       if (error?.response?.status === UNAUTHORIZED) {
-        console.log("error handler ran successsfully");
         localStorage.clear();
         navigate("/unauthorized", { replace: true });
-        // navigate("/access", { replace: true });
       }
       return Promise.reject(error);
     }
