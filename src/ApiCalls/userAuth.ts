@@ -8,41 +8,6 @@ import {
   UserCredentials,
   UserData,
 } from "../types/services.types";
-// export type SignInResponse = {
-//   status: boolean;
-//   allowUser: boolean;
-//   message: string;
-//   token: string;
-//   username: string;
-// };
-// type UserData = {
-//   username: string;
-//   email: string;
-//   password: string;
-//   confirmPassword: string;
-// };
-// type UserCredentials = {
-//   username: string;
-//   password: string;
-// };
-// export type SignUpResponse = {
-//   status: boolean;
-//   message: string;
-//   token: string;
-//   username: string;
-// };
-// export type duplicateError = {
-//   status: boolean;
-//   code: number;
-//   message: string;
-//   errorDetail: string;
-//   existingField: string;
-// };
-// export type ServerError = {
-//   status: boolean;
-//   errorDetail: string;
-//   message: string;
-// };
 
 export function setupAuthHeaderForServiceCalls(token: string | null) {
   console.log("token applier running");
@@ -53,24 +18,7 @@ export function setupAuthHeaderForServiceCalls(token: string | null) {
   console.log("token not found and not applied");
   delete axios.defaults.headers.common["Authorization"];
 }
-// export function AuthHeaderHandler(token: string) {
-//   axios.interceptors.request.use((req) => {
-//     req.headers.authorization = token;
-//     console.log("token added for further requests");
-//     return req;
-//   });
-// }
-// export function AxiosErrorHandler() {
-//   axios.interceptors.response.use(
-//     (res) => res,
-//     (err) => {
-//       if (err.response.status === 404) {
-//         throw new Error(`${err.config.url} not found`);
-//       }
-//       throw err;
-//     }
-//   );
-// }
+
 export async function UserSignUp(
   userData: UserData
 ): Promise<SignUpResponse | ServerError | DuplicateError> {

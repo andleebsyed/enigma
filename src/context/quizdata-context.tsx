@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
-// import { data } from "../data/data";
-import { QuizDataContext } from "../data/data.types";
+import { QuizDataContext } from "../types/data.types";
 export const DataContext = createContext<QuizDataContext>(
   {} as QuizDataContext
 );

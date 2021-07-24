@@ -1,6 +1,3 @@
-// export type OPTION = {
-//   option: string;
-// };
 export type QUESTION = {
   question: string;
   options: string[];
