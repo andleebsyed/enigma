@@ -28,7 +28,6 @@ function App() {
   useEffect(() => {
     async function Run() {
       hasFetchedData.current = true;
-      console.log("useeffect ran in entry opf app");
       const response = await QuizData();
       setData({ ...data, quizCategories: response });
       setupUserAuthorizationHandler(navigate);

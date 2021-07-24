@@ -30,9 +30,9 @@ export function QuizQuestion({ questions }: QUESTIONS) {
       setButtonStatus(false);
       if (questionIteratorIndex + 1 === quizPerformance.totalQuestions) {
         ChangeOnUserAction();
+        const response = await SaveToLeaderboard(quizPerformance.score);
 
-        const { authorized } = await SaveToLeaderboard(quizPerformance.score);
-        if (authorized) {
+        if ("authorized" in response) {
           navigate("/results");
         }
       } else {

@@ -1,5 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { BASE_URL } from "../ApiUrls/ApiUrls";
+import { CATEGORYDATA, QUIZCATEGORIES } from "../types/data.types";
 import {
   DuplicateError,
   ServerError,
@@ -62,7 +63,11 @@ export async function UserSignIn(
         password: userCredentials.password,
       },
     };
-    const response = await axios.post(BASE_URL + "/user/signin", userDetails);
+    const response = await axios.post<SignInResponse>(
+      BASE_URL + "/user/signin",
+      userDetails
+    );
+    console.log({ response });
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -81,9 +86,10 @@ export async function UserSignIn(
   }
 }
 
-export async function QuizData() {
+export async function QuizData(): Promise<CATEGORYDATA[] | ServerError> {
   try {
-    const response = await axios.get(BASE_URL + "/quizdata");
+    const response = await axios.get<QUIZCATEGORIES>(BASE_URL + "/quizdata");
+    console.log("quiz response ", { response });
     return response.data.quizCategories;
   } catch (error) {
     if (axios.isAxiosError(error)) {

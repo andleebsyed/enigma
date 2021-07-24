@@ -1,9 +1,17 @@
 import axios, { AxiosError } from "axios";
 import { BASE_URL } from "../ApiUrls/ApiUrls";
 import { SingleLeaderboardEntry } from "../pages/Leaderboard/Leaderboard.types";
-import { ServerError } from "../types/services.types";
+import {
+  DataFromLeaderboard,
+  FetchFromLeaderboardResponse,
+  SaveToLeaderboardResponse,
+  ServerError,
+  Unauthorized,
+} from "../types/services.types";
 import { setupAuthHeaderForServiceCalls } from "./userAuth";
-export async function SaveToLeaderboard(score: number) {
+export async function SaveToLeaderboard(
+  score: number
+): Promise<ServerError | Unauthorized> {
   try {
     setupAuthHeaderForServiceCalls(localStorage.getItem("token"));
 
@@ -15,7 +23,7 @@ export async function SaveToLeaderboard(score: number) {
       },
     };
     console.log({ userPerformanceData });
-    const response = await axios.post(
+    const response = await axios.post<SaveToLeaderboardResponse>(
       BASE_URL + "/leaderboard",
       userPerformanceData
     );
@@ -43,9 +51,12 @@ export async function SaveToLeaderboard(score: number) {
   }
 }
 
-export async function FetchFromLeaderboard() {
+export async function FetchFromLeaderboard(): Promise<DataFromLeaderboard[]> {
   setupAuthHeaderForServiceCalls(localStorage.getItem("token"));
-  const response = await axios.get(BASE_URL + "/leaderboard");
+  const response = await axios.get<FetchFromLeaderboardResponse>(
+    BASE_URL + "/leaderboard"
+  );
+  console.log({ response });
   const ourLeaderboard = response.data.data
     .sort(
       (a: SingleLeaderboardEntry, b: SingleLeaderboardEntry) =>

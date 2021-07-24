@@ -33,3 +33,25 @@ export type ServerError = {
   errorDetail: string;
   message: string;
 };
+
+export type SaveToLeaderboardResponse = {
+  message: string;
+  status: boolean;
+};
+
+export type Unauthorized = {
+  authorized: boolean;
+};
+export type DataFromLeaderboard = {
+  name: string;
+  quizName: string;
+  score: number;
+  __v: number;
+  _id: string;
+};
+
+export type FetchFromLeaderboardResponse = {
+  data: DataFromLeaderboard[];
+  message: string;
+  status: boolean;
+};
