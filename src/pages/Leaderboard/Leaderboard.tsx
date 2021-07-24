@@ -2,14 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FetchFromLeaderboard } from "../../ApiCalls/leaderboard";
 import { useData } from "../../context/quizdata-context";
-export type SingleLeaderboardEntry = {
-  _id: string;
-  name: string;
-  quizName: string;
-  score: number;
-  __v: number;
-};
-type LeaderboardData = SingleLeaderboardEntry[];
+import { LeaderboardData } from "./Leaderboard.types";
 export function Leaderboard() {
   const [leaderboard, setLeaderboard] = useState<LeaderboardData>(
     {} as LeaderboardData
@@ -26,11 +19,12 @@ export function Leaderboard() {
     if (didMount) {
       Run();
     }
+    // to prevent memeory leak, cleaning up async task
     return () => setDidMount(false);
   }, [didMount, data]);
   if (leaderboard.length > 0) {
     return (
-      <div className="flex justify-center m-4 md:mt-8">
+      <div className="flex justify-center  md:mt-8 bg-grey">
         <main className="flex flex-col justify-center w-5/6 sm:w-2/4">
           <section className="  mb-4 rounded p-4 ">
             <h1 className="text-white  font-bold text-2xl  justify-center  text-center">
@@ -55,7 +49,7 @@ export function Leaderboard() {
             ))}
           </section>
 
-          <footer className="flex justify-center mt-4 ">
+          <footer className="flex justify-center  ">
             <Link to="/categories">
               <button className="bg-blue text-white font-bold p-2 rounded">
                 Play Again
@@ -66,6 +60,6 @@ export function Leaderboard() {
       </div>
     );
   } else {
-    return <div>loading...</div>;
+    return <div className="bg-grey">loading...</div>;
   }
 }
