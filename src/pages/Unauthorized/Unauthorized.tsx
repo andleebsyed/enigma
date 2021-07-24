@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-export function AuthHandler() {
+export function Unauthorized() {
   return (
     <main className="flex flex-col items-center justify-center min-h-screen bg-grey">
       <p className="text-white text-xl pt-8 text-center">

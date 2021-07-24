@@ -10,7 +10,7 @@ import { Homepage } from "./pages/Homepage/Homepage";
 import { useEffect } from "react";
 import { QuizData, setupUserAuthorizationHandler } from "./ApiCalls/userAuth";
 import { useData } from "./context/quizdata-context";
-import { AuthHandler } from "./pages/AuthHandler/AuthHandler";
+import { Unauthorized } from "./pages/Unauthorized/Unauthorized";
 function App() {
   const navigate = useNavigate();
   const { data, setData } = useData();
@@ -19,7 +19,7 @@ function App() {
       return <Route {...props} />;
     } else {
       return (
-        <Route {...props} path="/unauthorized" element={<AuthHandler />} />
+        <Route {...props} path="/unauthorized" element={<Unauthorized />} />
       );
     }
   }
@@ -43,7 +43,7 @@ function App() {
         <PrivateRoute path="/question/:chosenQuizName" element={<Question />} />
         <PrivateRoute path="/results" element={<Results />} />
         <PrivateRoute path="/leaderboard" element={<Leaderboard />} />
-        <Route path="/unauthorized" element={<AuthHandler />} />
+        <Route path="/unauthorized" element={<Unauthorized />} />
       </Routes>
     </div>
   );
