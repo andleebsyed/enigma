@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { FetchFromLeaderboard } from "../../ApiCalls/leaderboard";
 import { useData } from "../../context/quizdata-context";
 import { LeaderboardData } from "./Leaderboard.types";
+import { Loader } from "../../Components/Loader/Loader";
 export function Leaderboard() {
   const [leaderboard, setLeaderboard] = useState<LeaderboardData>(
     {} as LeaderboardData
@@ -60,6 +61,6 @@ export function Leaderboard() {
       </div>
     );
   } else {
-    return <div className="bg-grey">loading...</div>;
+    return <Loader />;
   }
 }

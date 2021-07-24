@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { QuizData, setupUserAuthorizationHandler } from "./ApiCalls/userAuth";
 import { useData } from "./context/quizdata-context";
 import { Unauthorized } from "./pages/Unauthorized/Unauthorized";
+import { Loader } from "./Components/Loader/Loader";
 function App() {
   const navigate = useNavigate();
   const { data, setData } = useData();
@@ -35,6 +36,7 @@ function App() {
   return (
     <div className="bg-grey h-screen">
       <Header />
+      {/* <Loader /> */}
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/access" element={<Access />} />
