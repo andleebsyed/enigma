@@ -11,8 +11,9 @@ export function Question() {
     return singleQuiz.quizName === chosenQuizName;
   });
   useEffect(() => {
+    console.log("quizName useeffect ran");
     localStorage.setItem("quizName", chosenQuizName);
-  }, []);
+  }, [chosenQuizName]);
   return data.quizCategories.length > 0 ? (
     <div className="min-h-screen bg-grey">
       <QuizPerformance />

@@ -6,8 +6,9 @@ export function Categories() {
   const { data } = useData();
   const { dispatch } = useQuizPerformance();
   useEffect(() => {
+    console.log("reset effect ran");
     dispatch({ type: "RESET" });
-  }, []);
+  }, [dispatch]);
   return (
     <div className="flex flex-col justify-center bg-grey items-center min-h-screen ">
       <section className="flex justify-evenly flex-wrap  ">
