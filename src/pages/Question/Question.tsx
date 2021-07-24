@@ -16,7 +16,7 @@ export function Question() {
   return data?.quizCategories?.length > 0 ? (
     <div className="min-h-screen bg-grey">
       <QuizPerformance />
-      <main className="flex flex-col items-center ml-2 mr-2 mt-16 ">
+      <main className="flex flex-col items-center ml-2 mr-2 md:mt-16 bg-grey ">
         <QuizQuestion questions={chosenQuiz!.questions} />
       </main>
     </div>

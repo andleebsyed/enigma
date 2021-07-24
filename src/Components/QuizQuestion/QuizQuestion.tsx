@@ -48,7 +48,6 @@ export function QuizQuestion({ questions }: QUESTIONS) {
     correctOption: string,
     options: string[]
   ) {
-    // setButtonStatus("disabled")
     const ourOptionIndex = options.indexOf(choosenOption);
     const newBgOptions = [...bgOptions];
     if (choosenOption === correctOption) {
@@ -68,7 +67,7 @@ export function QuizQuestion({ questions }: QUESTIONS) {
   return (
     <>
       <div className="bg-grey-extralight rounded mb-4 lg:w-3/5 md:w-4/5 sm:h-20">
-        <p className="font-extrabold text-white break-words p-4 ">
+        <p className="font-extrabold text-white break-words p-3 ">
           {questions[questionIteratorIndex].question}
         </p>
       </div>
@@ -91,7 +90,7 @@ export function QuizQuestion({ questions }: QUESTIONS) {
       <button
         disabled={buttonStatus}
         onClick={() => ToRunAfterOptionHit(0)}
-        className="text-white bg-blue font-bold p-2 w-40  rounded "
+        className="text-white bg-blue font-bold p-2 w-40 mb-4  rounded "
       >
         Skip
       </button>
