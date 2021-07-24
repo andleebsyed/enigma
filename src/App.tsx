@@ -7,11 +7,12 @@ import { Question } from "./pages/Question/Question";
 import { Results } from "./pages/Results/Results";
 import { Leaderboard } from "./pages/Leaderboard/Leaderboard";
 import { Homepage } from "./pages/Homepage/Homepage";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { QuizData, setupUserAuthorizationHandler } from "./ApiCalls/userAuth";
 import { useData } from "./context/quizdata-context";
 import { Unauthorized } from "./pages/Unauthorized/Unauthorized";
 function App() {
+  const hasFetchedData = useRef(false);
   const navigate = useNavigate();
   const { data, setData } = useData();
   function PrivateRoute(props: any) {
@@ -26,12 +27,16 @@ function App() {
 
   useEffect(() => {
     async function Run() {
+      hasFetchedData.current = true;
+      console.log("useeffect ran in entry opf app");
       const response = await QuizData();
       setData({ ...data, quizCategories: response });
       setupUserAuthorizationHandler(navigate);
     }
-    Run();
-  }, []);
+    if (!hasFetchedData.current) {
+      Run();
+    }
+  }, [data, navigate, setData]);
   return (
     <div className="bg-grey h-screen">
       <Header />
