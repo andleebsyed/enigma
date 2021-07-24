@@ -18,7 +18,9 @@ function App() {
     if (localStorage.getItem("token")) {
       return <Route {...props} />;
     } else {
-      return <Route {...props} path="/access" element={<Access />} />;
+      return (
+        <Route {...props} path="/unauthorized" element={<AuthHandler />} />
+      );
     }
   }
 
@@ -40,7 +42,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <PrivateRoute path="/question/:chosenQuizName" element={<Question />} />
         <PrivateRoute path="/results" element={<Results />} />
-        <Route path="/leaderboard" element={<Leaderboard />} />
+        <PrivateRoute path="/leaderboard" element={<Leaderboard />} />
         <Route path="/unauthorized" element={<AuthHandler />} />
       </Routes>
     </div>

@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ServerError, SignUpResponse } from "../../types/services.types";
 import {
-  ServerError,
   setupAuthHeaderForServiceCalls,
-  SignUpResponse,
   UserSignUp,
 } from "../../ApiCalls/userAuth";
-// import { useQuizPerformance } from "../../context/quizResults.context";
 
 export function SignUp() {
   const initialState = {
@@ -22,7 +20,6 @@ export function SignUp() {
   });
   const [signUpButtonText, setSignUpButtonText] = useState("Sign Up");
   const navigate = useNavigate();
-  // const { quizPerformance, dispatch } = useQuizPerformance();
   function SignInSuccess(response: SignUpResponse | ServerError) {
     if ("token" in response) {
       setupAuthHeaderForServiceCalls(response.token);

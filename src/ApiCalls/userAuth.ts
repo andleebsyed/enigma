@@ -1,40 +1,48 @@
 import axios, { AxiosError } from "axios";
 import { BASE_URL } from "../ApiUrls/ApiUrls";
-export type SignInResponse = {
-  status: boolean;
-  allowUser: boolean;
-  message: string;
-  token: string;
-  username: string;
-};
-type UserData = {
-  username: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-};
-type UserCredentials = {
-  username: string;
-  password: string;
-};
-export type SignUpResponse = {
-  status: boolean;
-  message: string;
-  token: string;
-  username: string;
-};
-export type duplicateError = {
-  status: boolean;
-  code: number;
-  message: string;
-  errorDetail: string;
-  existingField: string;
-};
-export type ServerError = {
-  status: boolean;
-  errorDetail: string;
-  message: string;
-};
+import {
+  DuplicateError,
+  ServerError,
+  SignInResponse,
+  SignUpResponse,
+  UserCredentials,
+  UserData,
+} from "../types/services.types";
+// export type SignInResponse = {
+//   status: boolean;
+//   allowUser: boolean;
+//   message: string;
+//   token: string;
+//   username: string;
+// };
+// type UserData = {
+//   username: string;
+//   email: string;
+//   password: string;
+//   confirmPassword: string;
+// };
+// type UserCredentials = {
+//   username: string;
+//   password: string;
+// };
+// export type SignUpResponse = {
+//   status: boolean;
+//   message: string;
+//   token: string;
+//   username: string;
+// };
+// export type duplicateError = {
+//   status: boolean;
+//   code: number;
+//   message: string;
+//   errorDetail: string;
+//   existingField: string;
+// };
+// export type ServerError = {
+//   status: boolean;
+//   errorDetail: string;
+//   message: string;
+// };
 
 export function setupAuthHeaderForServiceCalls(token: string | null) {
   console.log("token applier running");
@@ -65,7 +73,7 @@ export function setupAuthHeaderForServiceCalls(token: string | null) {
 // }
 export async function UserSignUp(
   userData: UserData
-): Promise<SignUpResponse | ServerError | duplicateError> {
+): Promise<SignUpResponse | ServerError | DuplicateError> {
   try {
     const userDetails = {
       userDetails: {

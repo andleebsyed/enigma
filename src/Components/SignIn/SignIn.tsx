@@ -1,11 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import {
-  ServerError,
   setupAuthHeaderForServiceCalls,
-  SignInResponse,
   UserSignIn,
 } from "../../ApiCalls/userAuth";
+import { ServerError, SignInResponse } from "../../types/services.types";
 // import { useQuizPerformance } from "../../context/quizResults.context";
 export function SignIn() {
   const navigate = useNavigate();

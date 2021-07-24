@@ -1,15 +1,6 @@
 import { Link } from "react-router-dom";
-export type CATEGORY = {
-  category: {
-    quizName: string;
-    description: string;
-    questions: {
-      question: string;
-      options: string[];
-      correctOption: string;
-    }[];
-  };
-};
+import { CATEGORY } from "./QuizCard.types";
+
 export function QuizCard({ category }: CATEGORY) {
   return (
     <section className=" bg-grey-dark h-72 w-56 flex flex-col mt-4 m-4 items-center justify-evenly rounded">

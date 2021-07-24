@@ -1,7 +1,8 @@
 import axios, { AxiosError } from "axios";
 import { BASE_URL } from "../ApiUrls/ApiUrls";
-import { SingleLeaderboardEntry } from "../pages/Leaderboard/Leaderboard";
-import { ServerError, setupAuthHeaderForServiceCalls } from "./userAuth";
+import { SingleLeaderboardEntry } from "../pages/Leaderboard/Leaderboard.types";
+import { ServerError } from "../types/services.types";
+import { setupAuthHeaderForServiceCalls } from "./userAuth";
 export async function SaveToLeaderboard(score: number) {
   try {
     setupAuthHeaderForServiceCalls(localStorage.getItem("token"));
