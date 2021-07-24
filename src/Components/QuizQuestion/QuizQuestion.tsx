@@ -10,14 +10,13 @@ export function QuizQuestion({ questions }: QUESTIONS) {
     "bg-grey-extralight",
     "bg-grey-extralight",
   ];
-
+  const [buttonStatus, setButtonStatus] = useState(false);
   const [bgOptions, setBgOptions] = useState<string[]>(initialState);
   const [questionIteratorIndex, setQuestionIteratorIndex] = useState<number>(0);
   const { quizPerformance } = useQuizPerformance();
   const { dispatch } = useQuizPerformance();
   const navigate = useNavigate();
   useEffect(() => {
-    console.log("settting questions effect running");
     dispatch({ type: "SET_QUESTIONS_LENGTH", payload: questions.length });
   }, [dispatch, questions.length]);
 
@@ -26,7 +25,9 @@ export function QuizQuestion({ questions }: QUESTIONS) {
     function ChangeOnUserAction() {
       setBgOptions(initialState);
     }
+    setButtonStatus(true);
     setTimeout(async () => {
+      setButtonStatus(false);
       if (questionIteratorIndex + 1 === quizPerformance.totalQuestions) {
         ChangeOnUserAction();
 
@@ -47,6 +48,7 @@ export function QuizQuestion({ questions }: QUESTIONS) {
     correctOption: string,
     options: string[]
   ) {
+    // setButtonStatus("disabled")
     const ourOptionIndex = options.indexOf(choosenOption);
     const newBgOptions = [...bgOptions];
     if (choosenOption === correctOption) {
@@ -72,6 +74,7 @@ export function QuizQuestion({ questions }: QUESTIONS) {
       </div>
       {questions[questionIteratorIndex].options.map((option, index) => (
         <button
+          disabled={buttonStatus}
           key={index}
           onClick={() =>
             optionHitHandler(
@@ -86,6 +89,7 @@ export function QuizQuestion({ questions }: QUESTIONS) {
         </button>
       ))}
       <button
+        disabled={buttonStatus}
         onClick={() => ToRunAfterOptionHit(0)}
         className="text-white bg-blue font-bold p-2 w-40  rounded "
       >
