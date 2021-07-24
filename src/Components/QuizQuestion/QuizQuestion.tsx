@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { SaveToLeaderboard } from "../../ApiCalls/leaderboard";
+import { SaveToLeaderboard } from "../../services/leaderboard";
 import { useQuizPerformance } from "../../context/quizResults.context";
 import { QUESTIONS } from "./QuizQuestions.types";
 export function QuizQuestion({ questions }: QUESTIONS) {

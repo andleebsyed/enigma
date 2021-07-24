@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { FetchFromLeaderboard } from "../../ApiCalls/leaderboard";
+import { FetchFromLeaderboard } from "../../services/leaderboard";
 import { useData } from "../../context/quizdata-context";
 import { LeaderboardData } from "./Leaderboard.types";
 import { Loader } from "../../Components/Loader/Loader";

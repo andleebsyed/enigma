@@ -8,7 +8,7 @@ import { Results } from "./pages/Results/Results";
 import { Leaderboard } from "./pages/Leaderboard/Leaderboard";
 import { Homepage } from "./pages/Homepage/Homepage";
 import { useEffect, useRef } from "react";
-import { QuizData, setupUserAuthorizationHandler } from "./ApiCalls/userAuth";
+import { QuizData, setupUserAuthorizationHandler } from "./services/userAuth";
 import { useData } from "./context/quizdata-context";
 import { Unauthorized } from "./pages/Unauthorized/Unauthorized";
 function App() {

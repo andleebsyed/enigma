@@ -89,7 +89,6 @@ export async function UserSignIn(
 export async function QuizData(): Promise<CATEGORYDATA[] | ServerError> {
   try {
     const response = await axios.get<QUIZCATEGORIES>(BASE_URL + "/quizdata");
-    console.log("quiz response ", { response });
     return response.data.quizCategories;
   } catch (error) {
     if (axios.isAxiosError(error)) {

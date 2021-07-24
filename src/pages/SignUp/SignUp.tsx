@@ -4,7 +4,7 @@ import { ServerError, SignUpResponse } from "../../types/services.types";
 import {
   setupAuthHeaderForServiceCalls,
   UserSignUp,
-} from "../../ApiCalls/userAuth";
+} from "../../services/userAuth";
 
 export function SignUp() {
   const initialState = {
