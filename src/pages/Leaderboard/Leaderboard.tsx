@@ -53,7 +53,7 @@ export function Leaderboard() {
           <footer className="flex justify-center  ">
             <Link to="/categories">
               <button className="bg-blue text-white font-bold p-2 rounded">
-                Play Again
+                Back to Playground
               </button>
             </Link>
           </footer>
