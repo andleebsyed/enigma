@@ -22,14 +22,11 @@ export async function SaveToLeaderboard(
         score: score,
       },
     };
-    console.log({ userPerformanceData });
     const response = await axios.post<SaveToLeaderboardResponse>(
       BASE_URL + "/leaderboard",
       userPerformanceData
     );
-    console.log({ response });
     if (response.status === 401) {
-      console.log({ response });
       return { authorized: false };
     } else {
       return { authorized: true };
@@ -56,7 +53,6 @@ export async function FetchFromLeaderboard(): Promise<DataFromLeaderboard[]> {
   const response = await axios.get<FetchFromLeaderboardResponse>(
     BASE_URL + "/leaderboard"
   );
-  console.log({ response });
   const ourLeaderboard = response.data.data
     .sort(
       (a: SingleLeaderboardEntry, b: SingleLeaderboardEntry) =>

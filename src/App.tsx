@@ -51,14 +51,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Homepage />} />
         <RouteRedirector path="/access" element={<Access />} />
-        <PrivateRoute
-          path="/categories"
-          element={
-            <div className="flex justify-center items-center ">
-              <Categories />
-            </div>
-          }
-        />
+        <PrivateRoute path="/categories" element={<Categories />} />
         <RouteRedirector path="/signup" element={<SignUp />} />
         <PrivateRoute path="/question/:chosenQuizName" element={<Question />} />
         <PrivateRoute path="/results" element={<Results />} />
