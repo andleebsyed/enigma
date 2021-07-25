@@ -26,6 +26,14 @@ function App() {
     }
   }
 
+  function RouteRedirector(props: any) {
+    if (localStorage.getItem("token")) {
+      return <Route element={<Categories />} />;
+    } else {
+      return <Route {...props} />;
+    }
+  }
+
   useEffect(() => {
     async function Run() {
       hasFetchedData.current = true;
@@ -42,7 +50,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Homepage />} />
-        <Route path="/access" element={<Access />} />
+        <RouteRedirector path="/access" element={<Access />} />
         <PrivateRoute
           path="/categories"
           element={
@@ -51,7 +59,7 @@ function App() {
             </div>
           }
         />
-        <Route path="/signup" element={<SignUp />} />
+        <RouteRedirector path="/signup" element={<SignUp />} />
         <PrivateRoute path="/question/:chosenQuizName" element={<Question />} />
         <PrivateRoute path="/results" element={<Results />} />
         <PrivateRoute path="/leaderboard" element={<Leaderboard />} />
