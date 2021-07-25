@@ -10,7 +10,7 @@ export function Categories() {
     dispatch({ type: "RESET" });
   }, [dispatch]);
   return data?.quizCategories?.length > 0 ? (
-    <div className="flex flex-col justify-center bg-grey items-center min-h-screen ">
+    <div className="flex flex-col justify-center bg-grey items-center min-h-screen">
       <section className="flex justify-evenly flex-wrap  ">
         {data?.quizCategories.map((category) => (
           <QuizCard key={category.quizName} category={category} />

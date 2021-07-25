@@ -11,6 +11,7 @@ import { useEffect, useRef } from "react";
 import { QuizData, setupUserAuthorizationHandler } from "./services/userAuth";
 import { useData } from "./context/quizdata-context";
 import { Unauthorized } from "./pages/Unauthorized/Unauthorized";
+import { NotFound } from "./pages/NotFound/NotFound";
 function App() {
   const hasFetchedData = useRef(false);
   const navigate = useNavigate();
@@ -42,12 +43,20 @@ function App() {
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/access" element={<Access />} />
-        <PrivateRoute path="/categories" element={<Categories />} />
+        <PrivateRoute
+          path="/categories"
+          element={
+            <div className="flex justify-center items-center ">
+              <Categories />
+            </div>
+          }
+        />
         <Route path="/signup" element={<SignUp />} />
         <PrivateRoute path="/question/:chosenQuizName" element={<Question />} />
         <PrivateRoute path="/results" element={<Results />} />
         <PrivateRoute path="/leaderboard" element={<Leaderboard />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );
