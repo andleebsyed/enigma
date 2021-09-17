@@ -67,7 +67,6 @@ export async function UserSignIn(
       BASE_URL + "/user/signin",
       userDetails
     );
-    console.log({ response });
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -119,4 +118,24 @@ export function setupUserAuthorizationHandler(navigate: Function) {
       return Promise.reject(error);
     }
   );
+}
+
+export async function GuestAccess() {
+  try {
+    const response = await axios.post<SignInResponse>(BASE_URL + "/user/guest");
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const serverError = error as AxiosError<ServerError>;
+
+      if (serverError && serverError.response) {
+        return serverError.response.data;
+      }
+    }
+    return {
+      status: false,
+      message: "something went wrong",
+      errorDetail: error?.message,
+    };
+  }
 }

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import {
+  GuestAccess,
   setupAuthHeaderForServiceCalls,
   UserSignIn,
 } from "../../services/userAuth";
@@ -22,10 +23,21 @@ export function SignIn() {
       navigate("/categories", { replace: true });
     }
   }
-  async function SignInSubmitHandler(event: React.SyntheticEvent) {
+  async function SignInSubmitHandler({
+    event,
+    guest,
+  }: {
+    event: React.SyntheticEvent;
+    guest: boolean;
+  }) {
     event.preventDefault();
     setSigninButtonText("Signing In...");
-    const response = await UserSignIn(userCredentials);
+    let response;
+    if (guest) {
+      response = await GuestAccess();
+    } else {
+      response = await UserSignIn(userCredentials);
+    }
     setSigninButtonText("Sign In");
     if ("allowUser" in response && response.allowUser) {
       SignInSuccess(response);
@@ -41,7 +53,12 @@ export function SignIn() {
       <p className={` text-center text-red font-bold mt-2 ${loginError}`}>
         Username or Password incorrect
       </p>
-      <form className="flex flex-col" onSubmit={SignInSubmitHandler}>
+      <form
+        className="flex flex-col"
+        onSubmit={(event: React.SyntheticEvent) =>
+          SignInSubmitHandler({ event, guest: false })
+        }
+      >
         <label className="text-white mt-8">Username:</label>
         <input
           onChange={(event) =>
@@ -75,6 +92,14 @@ export function SignIn() {
           name="Sign In"
           value={`${signinButtonText}`}
         />
+        <button
+          onClick={(event: React.SyntheticEvent) =>
+            SignInSubmitHandler({ event, guest: true })
+          }
+          className="bg-red p-4 text-white w-10/12 self-center rounded mt-2"
+        >
+          Sign in as Guest
+        </button>
       </form>
     </main>
   );
