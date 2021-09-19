@@ -112,6 +112,12 @@ export function SignUp() {
             value={`${signUpButtonText}`}
           />
         </form>
+        <button
+          onClick={() => navigate("/access")}
+          className="text-center underline text-blue font-bold mt-2"
+        >
+          Already Have an Account?
+        </button>
       </main>
     </div>
   );
