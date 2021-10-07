@@ -6,7 +6,7 @@ export function Header() {
 
   function LogoutHandler() {
     localStorage.clear();
-    navigate("/access", { replace: true });
+    navigate("/", { replace: true });
   }
 
   return (
