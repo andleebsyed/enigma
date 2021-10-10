@@ -34,7 +34,7 @@ export function Leaderboard() {
           </section>
           <section className="">
             <section className="w-full flex justify-between mb-4 text-white  font-extrabold rounded  p-2 bg-grey-extralight">
-              <span>Name</span>
+              <span className="w-24">Name</span>
               <span>Quiz Name</span>
               <span>Score</span>
             </section>
@@ -43,8 +43,8 @@ export function Leaderboard() {
                 key={user._id}
                 className="flex justify-between mb-4 text-white  rounded border border-grey-extralight p-2 "
               >
-                <span>{user.name}</span>
-                <span>{user.quizName}</span>
+                <span className="w-24">{user.name}</span>
+                <span className="text-left">{user.quizName}</span>
                 <span>{user.score}</span>
               </section>
             ))}
